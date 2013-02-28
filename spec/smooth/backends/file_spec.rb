@@ -15,6 +15,17 @@ describe Smooth::Backends::File do
     Smooth::Backends::File.new(namespace:"test",data_directory: @tmpdir)
   end
 
+  it "should track the maximum updated at" do
+    backend.maximum_updated_at.should >= Time.now.to_i
+  end
+
+  it "should update the maximum updated at timestamp" do
+    current = backend.maximum_updated_at
+    sleep(1)
+    backend.create(attribute:"indigo")
+    backend.maximum_updated_at.should > current
+  end
+
   it "should not be throttled by default" do
     backend.should_not be_throttled
   end
@@ -43,6 +54,18 @@ describe Smooth::Backends::File do
     fetched = backend.show(result[:id])
     fetched.should be_present
     fetched[:attribute].should == "alpha"
+  end
+
+  it "should timestamp creates" do
+    current = Time.now.to_i
+    backend.create(attribute:"lima")[:created_at].should >= current
+  end
+
+  it "should timestamp updates" do
+    result = backend.create(attribute:"x-ray")
+    sleep(1)
+    backend.update(result.merge(:name=>"whiskey"))
+    backend.show(result[:id])[:updated_at].should > result[:created_at]
   end
 
   it "should assign an id to records" do
