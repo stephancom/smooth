@@ -3,25 +3,19 @@ module Smooth
 
     InvalidBackend = Class.new(Exception)
 
-    attr_reader :namespace,
-                :backend
+    attr_reader :backend
 
     def initialize options={}
-      @namespace = options[:namespace]
-      
-      options[:backend] ||= "file"
+      @namespace  = options[:namespace] 
 
-      begin
-        backend_class = "Smooth::Backends::#{ options[:backend].capitalize }".constantize
-        @backend = backend_class.new(namespace: namespace)
+      raise "Collections require a namespace" if @namespace.nil?
 
-        %w{index create update show destroy}.each do |action|
-          raise InvalidBackend unless backend.respond_to?()
-        end        
+      @backend    = options[:backend] || "file"
+      validate_backend
+    end
 
-      rescue         
-        raise InvalidBackend
-      end
+    def namespace
+      @namespace
     end
 
     def sync method, hash={}, options={}
@@ -45,5 +39,21 @@ module Smooth
         return backend.destroy( hash )
       end
     end    
+
+    protected
+      def validate_backend
+        begin
+          if @backend.is_a?(String)
+            @backend = eval("Smooth::Backends::#{ @backend.capitalize }").new(namespace: namespace)
+          end
+
+          %w{index create update show destroy}.each do |action|
+            raise InvalidBackend unless backend.respond_to?(action)
+          end        
+
+        rescue         
+          raise InvalidBackend
+        end        
+      end    
   end
 end
