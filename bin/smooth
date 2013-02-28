@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+begin
+  require 'smooth'
+rescue
+  require 'rubygems'
+  require 'smooth'
+end
