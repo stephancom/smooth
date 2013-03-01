@@ -6,4 +6,8 @@ describe Smooth::Collection do
   it "should have a file backend by default" do
     smooth.backend.should be_a(Smooth::Backends::File)
   end
+
+  describe "the sync method" do
+    
+  end
 end
