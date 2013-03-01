@@ -8,6 +8,5 @@ describe Smooth::Collection do
   end
 
   describe "the sync method" do
-    
   end
 end
