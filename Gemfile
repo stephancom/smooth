@@ -1,13 +1,14 @@
 source "https://rubygems.org"
 gemspec
 
-gem 'rspec'
 gem 'sinatra'
 gem 'faye'
 gem 'redis'
 gem 'activesupport'
 
-group :development do
+group :development, :test do
+  gem 'rspec'
+  gem "rake"
   gem 'fakeredis'
   gem 'guard'
   gem 'rb-fsevent'
