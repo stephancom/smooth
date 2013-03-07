@@ -30,6 +30,10 @@ module Smooth
         params.keys.sort.inject([]) {|memo, key| memo << "#{ key }:#{ params[key] }" }.join("/")
       end
 
+      def to_hash
+        params
+      end
+
       protected
 
         def run_against backend

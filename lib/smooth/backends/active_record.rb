@@ -10,9 +10,30 @@ module Smooth
       end      
 
       def query params={}
-        model.smooth_query(params)
+        model.respond_to?(:query) ? model.query(params) : model.smooth_query(params)
       end
 
+      def index
+        model.scoped
+      end
+
+      def show id
+        model.find(id)
+      end
+
+      def update attributes
+        record = model.find(attributes[:id])        
+        record.update_attributes(attributes)
+        record
+      end
+
+      def destroy id
+        !!(model = model.find(id) && model.destroy)
+      end
+
+      def create attributes
+        record = model.create(attributes)
+      end
     end
 
     module ActiveRecord::QueryAdapter
