@@ -4,6 +4,6 @@ describe "A Smooth Collection backed by redis and rest" do
   let(:redis_backend) do
   end
 
-  let(:rest_backend) do
+  let(:rest_client_backend) do
   end
 end

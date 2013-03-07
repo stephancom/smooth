@@ -13,7 +13,7 @@ module Smooth
   require 'smooth/backends/active_record'
   require 'smooth/backends/file'
   require 'smooth/backends/redis'
-  require 'smooth/backends/rest'
+  require 'smooth/backends/rest_client'
 
   require 'smooth/collection'  
   require 'smooth/collection/query'

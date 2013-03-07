@@ -15,24 +15,12 @@ module Smooth
                     :namespace
 
       def initialize options={}
-        @id_counter           = 0
-        @maximum_updated_at   = Time.now.to_i
-        @storage              = {id_counter: @id_counter, records: {}, maximum_updated_at: @maximum_updated_at}
+        super
 
         @data_directory       = options[:data_directory]
-        @namespace            = options[:namespace]
-
         restore if ::File.exists?(storage_path)
       end
 
-
-      def records
-        @storage[:records]
-      end
-
-      def maximum_updated_at 
-        @storage[:maximum_updated_at]
-      end
 
       def storage_path
         ::File.join(data_directory, "#{ namespace }.json")
@@ -42,33 +30,6 @@ module Smooth
         "file://#{ storage_path }"
       end
 
-      def index
-        records.values
-      end
-
-      def show id
-        records[id.to_i]
-      end
-
-      def update attributes={}
-        attributes.symbolize_keys!
-        @storage[:maximum_updated_at] = attributes[:updated_at] = Time.now.to_i
-        record = records[attributes[:id]]
-        record.merge!(attributes)
-        record
-      end
-
-      def create attributes={}
-        attributes.symbolize_keys!
-        attributes[:id] = increment_id
-        @storage[:maximum_updated_at] = attributes[:created_at] = attributes[:updated_at] = Time.now.to_i
-        records[attributes[:id]] ||= attributes
-      end
-
-      def destroy id 
-        record = records.delete(id)
-        !record.nil?
-      end
 
       def kill
         @periodic_flusher && @periodic_flusher.kill
@@ -84,14 +45,6 @@ module Smooth
       end
 
       protected
-
-        def increment_id
-          @id_counter += 1
-        end
-
-        def storage=(object={})
-          @storage = object
-        end
 
         def throttled?
           @last_flushed_at && (Time.now.to_i - @last_flushed_at) < self.class.flush_threshold
