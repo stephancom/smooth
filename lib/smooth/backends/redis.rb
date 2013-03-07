@@ -1,11 +1,12 @@
 module Smooth
   module Backends
-    class Redis
+    class Redis < Base
       attr_reader :connection,
                   :namespace
 
       def initialize options={}
         @namespace        = options[:namespace]
+        @priority         = options[:priority] || 0
         @connection       = ::Redis.new()
       end
 

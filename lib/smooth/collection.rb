@@ -3,57 +3,42 @@ module Smooth
 
     InvalidBackend = Class.new(Exception)
 
-    attr_reader :backend
+    attr_reader :options, :backend
 
     def initialize options={}
-      @namespace  = options[:namespace] 
+      @options = options.reverse_merge(:backend=>"file")
 
-      raise "Collections require a namespace" if @namespace.nil?
+      if @options[:backend].is_a?(String)
+        @backend = "Smooth::Backends::#{ @options[:backend].camelize }".constantize.new(backend_options)
+      end
 
-      @backend    = options[:backend] || "file"
       validate_backend
     end
 
-    def namespace
-      @namespace
+    def url
+      backend.url rescue @namespace
     end
 
-    def sync method, hash={}, options={}
-      if method == "read" and !hash[:id].nil?
-        return backend.index()
-      end
-
-      if method == "read" and !hash[:id].nil?
-        return backend.show( hash[:id] )
-      end
-
-      if method == "create"
-        return backend.create( hash )
-      end
-
-      if method == "update"
-        return backend.update( hash )
-      end
-
-      if method == "delete"
-        return backend.destroy( hash )
-      end
-    end    
+    def query params={}, options={}
+      Query.run(self,apply_scope_parameters_to(params))
+    end
 
     protected
+
+      def apply_scope_parameters_to query_options={}
+        query_options
+      end
+
+      def namespace
+        options[:namespace]
+      end
+
+      def backend_options
+        options[:backend_options] || {namespace: namespace}
+      end
+
       def validate_backend
-        begin
-          if @backend.is_a?(String)
-            @backend = eval("Smooth::Backends::#{ @backend.capitalize }").new(namespace: namespace)
-          end
-
-          %w{index create update show destroy}.each do |action|
-            raise InvalidBackend unless backend.respond_to?(action)
-          end        
-
-        rescue         
-          raise InvalidBackend
-        end        
+        raise InvalidBackend unless backend.respond_to?(:query)
       end    
   end
 end

@@ -1,11 +1,6 @@
 source "https://rubygems.org"
 gemspec
 
-gem 'sinatra'
-gem 'faye'
-gem 'redis'
-gem 'activesupport'
-
 group :development, :test do
   gem 'rspec'
   gem "rake"

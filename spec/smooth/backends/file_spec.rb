@@ -15,6 +15,12 @@ describe Smooth::Backends::File do
     Smooth::Backends::File.new(namespace:"test",data_directory: @tmpdir)
   end
 
+  it "should be queryable" do
+    backend.query(attribute:"x-ray").should be_empty
+    backend.create(attribute:"yankee")
+    backend.query(attribute:"yankee").length.should == 1
+  end
+
   it "should track the maximum updated at" do
     backend.maximum_updated_at.should >= Time.now.to_i
   end

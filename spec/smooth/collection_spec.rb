@@ -7,6 +7,9 @@ describe Smooth::Collection do
     smooth.backend.should be_a(Smooth::Backends::File)
   end
 
-  describe "the sync method" do
+  it "should have the concept of a url" do
+  	smooth.url.should match(/test/)
   end
+
+
 end

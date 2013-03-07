@@ -1,6 +1,6 @@
 module Smooth
   module Backends
-    class File
+    class File < Base
 
       class << self
         attr_accessor :data_directory, :flush_threshold
@@ -18,11 +18,13 @@ module Smooth
         @id_counter           = 0
         @maximum_updated_at   = Time.now.to_i
         @storage              = {id_counter: @id_counter, records: {}, maximum_updated_at: @maximum_updated_at}
+
         @data_directory       = options[:data_directory]
         @namespace            = options[:namespace]
 
         restore if ::File.exists?(storage_path)
       end
+
 
       def records
         @storage[:records]
@@ -34,6 +36,10 @@ module Smooth
 
       def storage_path
         ::File.join(data_directory, "#{ namespace }.json")
+      end
+
+      def url
+        "file://#{ storage_path }"
       end
 
       def index
