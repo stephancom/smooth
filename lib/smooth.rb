@@ -15,6 +15,9 @@ module Smooth
   require 'smooth/backends/redis'
   require 'smooth/backends/rest_client'
 
-  require 'smooth/collection'  
+  require 'smooth/adapters/redis_cache.rb'
+  
+  require 'smooth/collection/cacheable'  
   require 'smooth/collection/query'
+  require 'smooth/collection'
 end

@@ -1,6 +1,6 @@
 module Smooth
   module Backends
-    class Rest
+    class RestClient
 
       def initialize options={}
 

@@ -5,6 +5,7 @@ module Smooth
       attr_accessor :model
 
       def initialize options={}
+        super
         @model = options[:model]
         model.send(:include, Smooth::Backends::ActiveRecord::QueryAdapter)
       end      

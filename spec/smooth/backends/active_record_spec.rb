@@ -13,5 +13,5 @@ describe Smooth::Backends::ActiveRecord do
     backend.query.count.should == 10
   end
 
-
 end
+
