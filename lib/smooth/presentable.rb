@@ -68,10 +68,18 @@ module Smooth
       end
 
       def index
-        resource_model.present(params).as(params[:presenter_format]).to(current_user.role)
+        resource_model.present(params).as(presenter_format).to(current_user_role)
       end
 
       protected
+
+        def current_user_role
+          current_user && current_user.try(:role)
+        end
+
+        def presenter_format
+          params[:presenter] || params[:presenter_format]
+        end
 
         def resource_model
           "#{ self.class.send(:resource) }".constantize
