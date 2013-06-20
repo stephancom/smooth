@@ -11,6 +11,7 @@ module Smooth
   require 'smooth/version'
   require 'smooth/queryable'
   require 'smooth/presentable'
+
   require 'smooth/backends/base'
   require 'smooth/backends/active_record'
   require 'smooth/backends/file'

@@ -9,13 +9,7 @@ module Smooth
 
       column_names = self.column_names.map {|c| ":#{ c }" }.join(", ")
 
-      code = %q{
-        class ::#{ to_s }Presenter
-          def self.default
-            [#{ column_names }]
-          end
-        end
-      }
+      code = "class ::#{ to_s }Presenter; def self.default; [#{ column_names }];end;end"
 
       eval(code)
     end
@@ -65,10 +59,13 @@ module Smooth
 
     end
 
-    class Controller < ApplicationController
-      respond_to :json
+    module Controller
+      extend ActiveSupport::Concern
 
-      class_attribute :resource
+      included do
+        respond_to :json
+        class_attribute :resource
+      end
 
       def index
         resource_model.present(params).as(params[:presenter_format]).to(current_user.role)
