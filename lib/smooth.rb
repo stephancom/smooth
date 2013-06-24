@@ -10,6 +10,9 @@ module Smooth
 
   require 'smooth/version'
   require 'smooth/queryable'
+
+  require 'smooth/presentable/chain'
+  require 'smooth/presentable/controller'
   require 'smooth/presentable'
 
   require 'smooth/backends/base'
