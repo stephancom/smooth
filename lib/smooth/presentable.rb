@@ -23,8 +23,30 @@ module Smooth
       config = presenter.send(format)
 
       presented = config.inject({}) do |memo,item|
-        memo[item] = record.send(item)
-        memo
+        AttributeDelegator.pluck(record, item, memo)
+      end
+    end
+
+    class AttributeDelegator
+      def self.pluck(record, attribute, memo)
+        if attribute.is_a?(Symbol) || attribute.is_a?(String)
+          memo[attribute] = record.send(attribute)
+          return memo
+        end
+
+        if attribute.is_a?(Hash)
+          key       = attribute[:attribute] || attribute[:key]
+          meth      = attribute[:method] || key
+          value     = record.send(meth)
+
+          if attribute[:presenter]
+            memo[key] = value.send(:present_as, attribute[:presenter])
+          else
+            memo[key] = value.respond_to?(:as_json) ? value.as_json : value
+          end
+        end
+
+        return memo
       end
     end
 

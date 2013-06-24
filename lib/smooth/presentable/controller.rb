@@ -9,7 +9,9 @@ module Smooth
       end
 
       def index
-        resource_model.present(params).as(presenter_format).to(current_user_role)
+        resource_model.present(params)
+                      .as(presenter_format)
+                      .to(current_user_role)
       end
 
       protected
