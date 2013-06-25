@@ -11,7 +11,7 @@ module Smooth
       def index
         records = base_scope.present(params)
                       .as(presenter_format)
-                      .to(current_user_role)
+                      .to(current_user_role).to_a
 
         respond_with(records)
       end
