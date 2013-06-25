@@ -31,7 +31,7 @@ module Smooth
         end
 
         def resource_model
-          resource = "#{ self.class.send(:resource) }" || params[:resource]
+          resource = self.class.resource || params[:resource]
           "#{ resource }".singularize.camelize.constantize
         end
     end
