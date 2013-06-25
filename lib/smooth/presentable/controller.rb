@@ -9,9 +9,11 @@ module Smooth
       end
 
       def index
-        resource_model.present(params)
+        records = base_scope.present(params)
                       .as(presenter_format)
                       .to(current_user_role)
+
+        respond_with(records)
       end
 
       protected
@@ -24,8 +26,13 @@ module Smooth
           params[:presenter] || params[:presenter_format] || :default
         end
 
+        def base_scope
+          resource_model
+        end
+
         def resource_model
-          "#{ self.class.send(:resource) }".constantize
+          resource = "#{ self.class.send(:resource) }" || params[:resource]
+          "#{ resource }".singularize.camelize.constantize
         end
     end
   end
