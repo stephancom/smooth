@@ -13,7 +13,7 @@ module Smooth
                       .as(presenter_format)
                       .to(current_user_role)
 
-        render :json => records.results
+        render :json => records.results, :root=> false
       end
 
       protected
