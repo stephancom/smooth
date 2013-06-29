@@ -5,6 +5,10 @@ describe Smooth::Presentable do
     Person.send(:include, Smooth::Presentable)
   end
 
+  it "should register the resource with the smooth metadata registry" do
+    Smooth::MetaData.available_resources.should include("Person")
+  end
+
   it "should create a presenter class when one doesn't exist" do
     defined?(PersonPresenter).should be_present
   end

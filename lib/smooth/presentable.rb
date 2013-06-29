@@ -7,11 +7,14 @@ module Smooth
         send(:include,Smooth::Queryable)
       end
 
-      column_names = self.column_names.map {|c| ":#{ c }" }.join(", ")
+      column_names = self.column_names.map {|c| ":#{ c }" }.join(", ") rescue []
 
       code = "class ::#{ to_s }Presenter; def self.default; [#{ column_names }];end;end"
 
       eval(code)
+
+      extend(Smooth::MetaData::Adapter)
+      register_resource_meta_data(self)
     end
 
     def presenter
@@ -22,7 +25,7 @@ module Smooth
       record = self
       config = presenter.send(format)
 
-      presented = config.inject({}) do |memo,item|
+      config.inject({}) do |memo,item|
         AttributeDelegator.pluck(record, item, memo)
       end
     end
@@ -35,15 +38,13 @@ module Smooth
         end
 
         if attribute.is_a?(Hash)
-          key       = attribute[:attribute] || attribute[:key]
-          meth      = attribute[:method] || key
-          value     = record.send(meth)
+          key         = attribute[:attribute] || attribute[:key]
+          meth        = attribute[:method] || key
+          presenter   = attribute[:presenter] || :default
 
-          if attribute[:presenter]
-            memo[key] = value.send(:present_as, attribute[:presenter])
-          else
-            memo[key] = value.respond_to?(:as_json) ? value.as_json : value
-          end
+          value       = record.send(meth)
+
+          memo[key] = value.send(:present_as, presenter)
         end
 
         return memo
@@ -51,6 +52,10 @@ module Smooth
     end
 
     module ClassMethods
+      def presenter_class
+        (self.to_s + "Presenter").constantize
+      end
+
       def present params={}
         scope = query(params)
         Smooth::Presentable::Chain.new(scope)

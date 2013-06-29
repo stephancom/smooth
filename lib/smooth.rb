@@ -9,6 +9,8 @@ module Smooth
   DataDirectory = File.join(ENV['HOME'],'.smooth')
 
   require 'smooth/version'
+  require 'smooth/meta_data'
+
   require 'smooth/queryable'
 
   require 'smooth/presentable/chain'
