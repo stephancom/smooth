@@ -13,6 +13,11 @@ describe Smooth::Presentable do
     PersonPresenter.should respond_to(:default)
   end
 
+  it "should allow me to present a resource as a given format" do
+    records = Person.present({}).as(:default)
+    records.results.should be_a(Array)
+  end
+
   context "Custom Presenters" do
     class PresentableHelper < ActiveRecord::Base
       self.table_name = "people"

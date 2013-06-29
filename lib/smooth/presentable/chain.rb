@@ -31,6 +31,10 @@ module Smooth
         end
       end
 
+      def to_a
+        results
+      end
+
       def method_missing meth, *args, &block
         results.send(meth, *args, &block)
       end
