@@ -16,6 +16,10 @@ describe Smooth::Queryable do
   end
 
   describe "Query Interface Metadata" do
+    it "should store some settings" do
+      q.smooth_queryable_settings.should be_a(Smooth::Queryable::Settings)
+    end
+
     it "should expose the available query parameters " do
       q.queryable_keys.should include(:name)
     end

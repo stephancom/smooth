@@ -9,12 +9,13 @@ module Smooth
       extend Smooth::MetaData::Adapter
       class_attribute :smooth_queryable_settings
       register_resource_meta_data(self)
+
+      self.smooth_queryable_settings ||= Settings.new()
     end
 
     module ClassMethods
       def can_be_queried_by parameter, *args
         options = args.extract_options!
-
         settings = self.smooth_queryable_settings ||= Settings.new()
 
         settings.apply_query_options(parameter, options)

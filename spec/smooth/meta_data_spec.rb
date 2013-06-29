@@ -5,8 +5,9 @@ describe Smooth::MetaData do
   class MetaDataHelper < ActiveRecord::Base
     self.table_name = "people"
 
-    include Smooth::Queryable
     include Smooth::Presentable
+
+    can_be_queried_by :name
   end
 
   let(:meta_data) { Smooth::MetaData["MetaDataHelper"] }
