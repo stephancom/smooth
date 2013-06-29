@@ -11,9 +11,9 @@ module Smooth
       def index
         records = base_scope.present(params)
                       .as(presenter_format)
-                      .to(current_user_role).to_a
+                      .to(current_user_role)
 
-        respond_with(records)
+        render :json => records.to_a
       end
 
       protected
