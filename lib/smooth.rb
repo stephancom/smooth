@@ -10,6 +10,7 @@ module Smooth
 
   require 'smooth/version'
   require 'smooth/meta_data'
+  require 'smooth/meta_data/application'
 
   require 'smooth/queryable'
 

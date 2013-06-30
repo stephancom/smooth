@@ -19,6 +19,22 @@ module Smooth
       def queryable_settings
         resource.smooth_queryable_settings.to_hash
       end
+
+      def to_hash
+        {
+          presentable: {
+            formats: presenters
+          },
+          queryable: {
+            parameters: queryable_parameters,
+            settings: queryable_settings
+          }
+        }
+      end
+
+      def as_json
+        to_hash
+      end
     end
   end
 end
