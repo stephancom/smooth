@@ -13,6 +13,14 @@ module Smooth
       resource.to_s
     end
 
+    def self.resources
+      resource_settings.inject({}) do |memo,pair|
+        resource_name, inspector = pair
+        memo[resource_name] = inspector.as_json
+        memo
+      end
+    end
+
     def self.available_resources
       resource_settings.keys
     end

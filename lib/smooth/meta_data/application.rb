@@ -1,15 +1,24 @@
+require 'sinatra'
 module Smooth
   module MetaData
-    class Application
-      attr_accessor :app, :options, :data
-
-      def initialize(app, options={})
-        @app = app
-        @options = options
+    class Application < Sinatra::Base
+      def resources
+        @resources ||= Smooth::MetaData.resources
       end
 
-      def call(env)
-        [200,{},[""]]
+      get "/" do
+        resources.to_json
+      end
+
+      get "/:resource" do
+        camelized = params[:resource].camelize
+        info = resources[camelized]
+
+        if info
+          info.to_json
+        else
+          halt 404
+        end
       end
     end
   end

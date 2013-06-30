@@ -9,7 +9,7 @@ module Smooth
       end
 
       def presenters
-        resource.presenter_class.public_methods - Object.methods
+        resource.presenter_class.public_methods - Object.methods rescue []
       end
 
       def queryable_parameters
@@ -17,19 +17,43 @@ module Smooth
       end
 
       def queryable_settings
-        resource.smooth_queryable_settings.to_hash
       end
 
-      def to_hash
+      def resource_is_presentable?
+        resource && resource.ancestors.include?(Smooth::Presentable)
+      end
+
+      def resource_is_queryable?
+        resource && resource.ancestors.include?(Smooth::Queryable)
+      end
+
+      def presentable_settings
+        return {} unless resource_is_presentable?
+
         {
           presentable: {
             formats: presenters
-          },
-          queryable: {
-            parameters: queryable_parameters,
-            settings: queryable_settings
           }
         }
+      end
+
+      def queryable_settings
+        return {} unless resource_is_queryable?
+
+        {
+          queryable:{
+            parameters: queryable_parameters,
+            settings: resource.smooth_queryable_settings.to_hash
+          }
+        }
+      end
+
+      def to_hash
+        hash = {}
+        hash.merge!(presentable_settings)
+        hash.merge!(queryable_settings)
+
+        hash
       end
 
       def as_json

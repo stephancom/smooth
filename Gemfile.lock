@@ -5,7 +5,6 @@ PATH
       activerecord (>= 3.2.12)
       activesupport (>= 3.2.12)
       faye
-      rack
       redis
       sinatra
       squeel
@@ -91,6 +90,8 @@ GEM
     rack (1.5.2)
     rack-protection (1.5.0)
       rack
+    rack-test (0.6.2)
+      rack (>= 1.0)
     rake (10.0.3)
     rb-fsevent (0.9.3)
     redis (3.0.2)
@@ -135,6 +136,7 @@ DEPENDENCIES
   guard-bundler
   guard-rspec
   machinist (~> 1.0.6)
+  rack-test
   rake
   rb-fsevent
   rspec
