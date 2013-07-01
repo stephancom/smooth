@@ -59,6 +59,12 @@ describe Smooth::Presentable do
       end
     end
 
+    it "should use the default format if an unknown format is requested" do
+      lambda {
+        PresentableHelper.new(name:"Sup").present_as(:sheeeeit)
+      }.should_not raise_error
+    end
+
     it "should allow me to nest other presenter calls" do
       record = PresentableHelper.new(name:"Tupac")
       presented = record.present_as(:custom)

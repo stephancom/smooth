@@ -23,6 +23,8 @@ module Smooth
 
     def present_as(format=:default)
       record = self
+      format = :default unless presenter.respond_to?(format)
+
       config = presenter.send(format)
 
       config.inject({}) do |memo,item|
