@@ -1,4 +1,10 @@
 module Smooth
+  class DefaultPresenter
+    def default
+      [:id]
+    end
+  end
+
   module Presentable
     extend ActiveSupport::Concern
 
@@ -8,9 +14,7 @@ module Smooth
       end
 
       column_names = self.column_names.map {|c| ":#{ c }" }.join(", ") rescue []
-
-      code = "class ::#{ to_s }Presenter; def self.default; [#{ column_names }];end;end"
-
+      code = "class ::#{ to_s }DefaultPresenter; def self.default; [#{ column_names }];end;end"
       eval(code)
 
       extend(Smooth::MetaData::Adapter)
@@ -18,16 +22,28 @@ module Smooth
     end
 
     def presenter
-      (self.class.to_s + "Presenter").constantize
+      self.class.presenter_class
+    end
+
+    def presenter_format format
+      if presenter.respond_to?(format)
+        presenter.send(format)
+      elsif self.class.default_presenter_class.respond_to?(format)
+        self.class.default_presenter_class.send(format)
+      else
+        []
+      end
+    end
+
+    def resource_columns
+      []
     end
 
     def present_as(format=:default)
       record = self
       format = :default unless presenter.respond_to?(format)
 
-      config = presenter.send(format)
-
-      config.inject({}) do |memo,item|
+      presenter_format(format).inject({}) do |memo,item|
         AttributeDelegator.pluck(record, item, memo)
       end
     end
@@ -55,7 +71,15 @@ module Smooth
 
     module ClassMethods
       def presenter_class
-        (self.to_s + "Presenter").constantize
+        begin
+          "#{ to_s }Presenter".constantize
+        rescue
+          default_presenter_class
+        end
+      end
+
+      def default_presenter_class
+        "#{ to_s }DefaultPresenter".constantize rescue Smooth::DefaultPresenter
       end
 
       def present params={}

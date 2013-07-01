@@ -10,11 +10,11 @@ describe Smooth::Presentable do
   end
 
   it "should create a presenter class when one doesn't exist" do
-    defined?(PersonPresenter).should be_present
+    defined?(PersonDefaultPresenter).should be_present
   end
 
   it "should create a default presenter format" do
-    PersonPresenter.should respond_to(:default)
+    PersonDefaultPresenter.should respond_to(:default)
   end
 
   it "should allow me to present a resource as a given format" do
@@ -35,6 +35,10 @@ describe Smooth::Presentable do
     end
 
     class PresentableHelperPresenter
+      def self.default
+        [:name]
+      end
+
       def self.custom
         [
           :name,

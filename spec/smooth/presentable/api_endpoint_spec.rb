@@ -18,7 +18,7 @@ describe Smooth::Presentable::ApiEndpoint do
   end
 
   class ApiHelperPresenter
-    def custom
+    def self.custom
       [:name,{key:"sup"}]
     end
   end
