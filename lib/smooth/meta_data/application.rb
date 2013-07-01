@@ -1,4 +1,5 @@
 require 'sinatra'
+
 module Smooth
   module MetaData
     class Application < Sinatra::Base
@@ -7,18 +8,21 @@ module Smooth
       end
 
       get "/" do
+        content_type :json
         resources.to_json
       end
 
       get "/:resource" do
+
+        content_type :json
         camelized = params[:resource].camelize
         info = resources[camelized]
 
-        if info
-          info.to_json
-        else
-          halt 404
+        if !info
+          halt 404 and return
         end
+
+        info.to_json
       end
     end
   end

@@ -16,6 +16,7 @@ module Smooth
 
   require 'smooth/presentable/chain'
   require 'smooth/presentable/controller'
+  require 'smooth/presentable/api_endpoint'
   require 'smooth/presentable'
 
   require 'smooth/backends/base'
