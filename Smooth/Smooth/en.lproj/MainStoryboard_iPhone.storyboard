@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="12">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+    </dependencies>
+    <scenes>
+        <!--Smooth View Controller-->
+        <scene sceneID="15">
+            <objects>
+                <viewController id="12" customClass="SmoothViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="13">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cMd-oK-hTk">
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="delegate" destination="12" id="h1t-ZG-tjU"/>
+                                </connections>
+                            </webView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mhl-vp-o3Q">
+                                <items>
+                                    <barButtonItem title="Insert" id="8Cj-lV-66w">
+                                        <connections>
+                                            <action selector="showImageButtonPressed:" destination="14" id="9Uu-T3-6F9"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="210" style="plain" systemItem="fixedSpace" id="T3a-a6-D7o"/>
+                                    <barButtonItem systemItem="refresh" id="jLI-Ne-xbC">
+                                        <connections>
+                                            <action selector="refreshButtonPressed:" destination="14" id="fwI-tj-reX"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="mhl-vp-o3Q" firstAttribute="bottom" secondItem="13" secondAttribute="bottom" type="default" id="0KD-4d-stR"/>
+                            <constraint firstItem="cMd-oK-hTk" firstAttribute="bottom" secondItem="mhl-vp-o3Q" secondAttribute="top" type="default" id="BSQ-tT-bGs"/>
+                            <constraint firstItem="cMd-oK-hTk" firstAttribute="trailing" secondItem="13" secondAttribute="trailing" type="default" id="CHA-KN-exv"/>
+                            <constraint firstItem="mhl-vp-o3Q" firstAttribute="leading" secondItem="13" secondAttribute="leading" type="default" id="Fmd-28-ih7"/>
+                            <constraint firstItem="cMd-oK-hTk" firstAttribute="top" secondItem="13" secondAttribute="top" type="default" id="HYL-pW-Sv3"/>
+                            <constraint firstItem="mhl-vp-o3Q" firstAttribute="trailing" secondItem="13" secondAttribute="trailing" type="default" id="PK6-4g-Zlk"/>
+                            <constraint firstItem="cMd-oK-hTk" firstAttribute="leading" secondItem="13" secondAttribute="leading" type="default" id="qml-p2-2lZ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="toolbar" destination="mhl-vp-o3Q" id="Fnh-cR-jIS"/>
+                        <outlet property="webView" destination="cMd-oK-hTk" id="0ca-z2-6TY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="14" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="154" y="365"/>
+        </scene>
+    </scenes>
+    <classes>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="SmoothViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SmoothViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="colorButtonPressed:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="refreshButtonPressed:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="showImageButtonPressed:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+    </classes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
