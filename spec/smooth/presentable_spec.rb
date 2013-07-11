@@ -9,14 +9,6 @@ describe Smooth::Presentable do
     Smooth::MetaData.available_resources.should include("Person")
   end
 
-  it "should create a presenter class when one doesn't exist" do
-    defined?(PersonDefaultPresenter).should be_present
-  end
-
-  it "should create a default presenter format" do
-    PersonDefaultPresenter.should respond_to(:default)
-  end
-
   it "should allow me to present a resource as a given format" do
     records = Person.present({}).as(:default)
     records.results.should be_a(Array)

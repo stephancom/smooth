@@ -9,11 +9,10 @@ module Smooth
       end
 
       def presenters
-        methods = []
+        methods = [:default]
         methods += resource.presenter_class.public_methods - Object.methods
-        methods += resource.default_presenter_class.public_methods - Object.methods
 
-        methods
+        methods.uniq
       end
 
       def queryable_parameters

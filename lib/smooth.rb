@@ -30,4 +30,6 @@ module Smooth
   require 'smooth/collection/cacheable'
   require 'smooth/collection/query'
   require 'smooth/collection'
+
+  require "smooth/resource"
 end

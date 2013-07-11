@@ -6,6 +6,7 @@ describe Smooth::MetaData do
     self.table_name = "people"
 
     include Smooth::Presentable
+    include Smooth::Queryable
 
     can_be_queried_by :name
   end

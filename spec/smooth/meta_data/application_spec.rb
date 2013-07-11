@@ -8,13 +8,16 @@ describe Smooth::MetaData::Application do
   end
 
   class MetaHelperOne < ActiveRecord::Base
+    include Smooth::Queryable
     include Smooth::Presentable
     self.table_name = :people
     can_be_queried_by :name
   end
 
   class MetaHelperTwo < ActiveRecord::Base
+    include Smooth::Queryable
     include Smooth::Presentable
+
     self.table_name = :people
     can_be_queried_by :name
   end

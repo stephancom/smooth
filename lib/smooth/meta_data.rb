@@ -29,10 +29,5 @@ module Smooth
       resource_settings[resource_name]
     end
 
-    module Adapter
-      def register_resource_meta_data klass
-        Smooth::MetaData.register_resource(klass)
-      end
-    end
   end
 end

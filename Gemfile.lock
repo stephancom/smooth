@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    smooth (0.0.1)
+    smooth (0.0.2)
       activerecord (>= 3.2.12)
       activesupport (>= 3.2.12)
       faye
