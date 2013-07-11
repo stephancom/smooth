@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A01A3CCF1783E2740012E5B9 /* uncrustify.cfg in Resources */ = {isa = PBXBuildFile; fileRef = A01A3CCE1783E2740012E5B9 /* uncrustify.cfg */; };
+		A02B30AD178E5BC900E0B949 /* SIOUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A02B30AC178E5BC900E0B949 /* SIOUserDefaults.m */; };
 		A03AE374177AA3260050ECD9 /* Smooth.m in Sources */ = {isa = PBXBuildFile; fileRef = A03AE373177AA3260050ECD9 /* Smooth.m */; };
 		A03AE375177AA3260050ECD9 /* Smooth.m in Sources */ = {isa = PBXBuildFile; fileRef = A03AE373177AA3260050ECD9 /* Smooth.m */; };
 		A03AE378177AA4AE0050ECD9 /* UIColor+Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = A03AE377177AA4AE0050ECD9 /* UIColor+Expanded.m */; };
@@ -19,9 +20,28 @@
 		A03AE390177AAB4E0050ECD9 /* smooth.css in Resources */ = {isa = PBXBuildFile; fileRef = A03AE38F177AAB4E0050ECD9 /* smooth.css */; };
 		A03AE391177AAB4E0050ECD9 /* smooth.css in Resources */ = {isa = PBXBuildFile; fileRef = A03AE38F177AAB4E0050ECD9 /* smooth.css */; };
 		A03AE394177AACE90050ECD9 /* smooth_example.js in Resources */ = {isa = PBXBuildFile; fileRef = A03AE392177AACE90050ECD9 /* smooth_example.js */; };
+		A03F0CA8178DFA8900EDBD03 /* MTStatusBarOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = A03F0CA7178DFA8900EDBD03 /* MTStatusBarOverlay.m */; };
+		A03F0CAD178DFBDB00EDBD03 /* SIOStatusBarMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = A03F0CAC178DFBDB00EDBD03 /* SIOStatusBarMessage.m */; };
+		A03F0CB2178E1EA600EDBD03 /* SIOAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = A03F0CB1178E1EA600EDBD03 /* SIOAlertView.m */; };
+		A03F0CB6178E207F00EDBD03 /* NSDictionary+SIOAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A03F0CB5178E207F00EDBD03 /* NSDictionary+SIOAdditions.m */; };
 		A0468107177B62B8000BD97B /* smooth.js in Resources */ = {isa = PBXBuildFile; fileRef = A03AE387177AA6700050ECD9 /* smooth.js */; };
 		A0468108177B62BD000BD97B /* jquery-1.9.1.js in Resources */ = {isa = PBXBuildFile; fileRef = A03AE384177AA6440050ECD9 /* jquery-1.9.1.js */; };
 		A0468109177B6726000BD97B /* smooth_example.js in Resources */ = {isa = PBXBuildFile; fileRef = A03AE392177AACE90050ECD9 /* smooth_example.js */; };
+		A059D2E5178C8C3F0026733E /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = A059D2E3178C8C3F0026733E /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A059D2E6178C8C3F0026733E /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = A059D2E3178C8C3F0026733E /* NSData+Base64.m */; };
+		A059D2EA178C8E570026733E /* duck.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A059D2E9178C8E570026733E /* duck.jpeg */; };
+		A059D2EB178C8E570026733E /* duck.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A059D2E9178C8E570026733E /* duck.jpeg */; };
+		A059D2ED178C93030026733E /* duck.png in Resources */ = {isa = PBXBuildFile; fileRef = A059D2EC178C93030026733E /* duck.png */; };
+		A059D2EE178C93030026733E /* duck.png in Resources */ = {isa = PBXBuildFile; fileRef = A059D2EC178C93030026733E /* duck.png */; };
+		A059D2F1178C93F00026733E /* goose.png in Resources */ = {isa = PBXBuildFile; fileRef = A059D2EF178C93F00026733E /* goose.png */; };
+		A059D2F2178C93F00026733E /* goose.png in Resources */ = {isa = PBXBuildFile; fileRef = A059D2EF178C93F00026733E /* goose.png */; };
+		A059D2F3178C93F00026733E /* goose.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A059D2F0178C93F00026733E /* goose.jpeg */; };
+		A059D2F4178C93F00026733E /* goose.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A059D2F0178C93F00026733E /* goose.jpeg */; };
+		A059D2F7178CCA160026733E /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = A059D2F5178CCA160026733E /* Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A059D2F8178CCA160026733E /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = A059D2F5178CCA160026733E /* Base64.m */; };
+		A059D2FA178D115C0026733E /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A059D2F9178D115C0026733E /* AddressBook.framework */; };
+		A059D2FE178D15760026733E /* SIOAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = A059D2FD178D15760026733E /* SIOAddressBook.m */; };
+		A059D2FF178D15760026733E /* SIOAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = A059D2FD178D15760026733E /* SIOAddressBook.m */; };
 		A090F861177AA01600683B6D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A090F860177AA01600683B6D /* UIKit.framework */; };
 		A090F863177AA01600683B6D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A090F862177AA01600683B6D /* Foundation.framework */; };
 		A090F865177AA01600683B6D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A090F864177AA01600683B6D /* CoreGraphics.framework */; };
@@ -53,6 +73,8 @@
 
 /* Begin PBXFileReference section */
 		A01A3CCE1783E2740012E5B9 /* uncrustify.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = uncrustify.cfg; path = ../uncrustify.cfg; sourceTree = "<group>"; };
+		A02B30AB178E5BC900E0B949 /* SIOUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIOUserDefaults.h; sourceTree = "<group>"; };
+		A02B30AC178E5BC900E0B949 /* SIOUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIOUserDefaults.m; sourceTree = "<group>"; };
 		A03AE372177AA3260050ECD9 /* Smooth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Smooth.h; sourceTree = "<group>"; };
 		A03AE373177AA3260050ECD9 /* Smooth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Smooth.m; sourceTree = "<group>"; };
 		A03AE376177AA4AE0050ECD9 /* UIColor+Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Expanded.h"; sourceTree = "<group>"; };
@@ -62,6 +84,25 @@
 		A03AE38C177AAB2C0050ECD9 /* smooth.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = smooth.html; sourceTree = "<group>"; };
 		A03AE38F177AAB4E0050ECD9 /* smooth.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = smooth.css; sourceTree = "<group>"; };
 		A03AE392177AACE90050ECD9 /* smooth_example.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = smooth_example.js; sourceTree = "<group>"; };
+		A03F0CA6178DFA8900EDBD03 /* MTStatusBarOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTStatusBarOverlay.h; sourceTree = "<group>"; };
+		A03F0CA7178DFA8900EDBD03 /* MTStatusBarOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTStatusBarOverlay.m; sourceTree = "<group>"; };
+		A03F0CAB178DFBDB00EDBD03 /* SIOStatusBarMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIOStatusBarMessage.h; sourceTree = "<group>"; };
+		A03F0CAC178DFBDB00EDBD03 /* SIOStatusBarMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIOStatusBarMessage.m; sourceTree = "<group>"; };
+		A03F0CB0178E1EA600EDBD03 /* SIOAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIOAlertView.h; sourceTree = "<group>"; };
+		A03F0CB1178E1EA600EDBD03 /* SIOAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIOAlertView.m; sourceTree = "<group>"; };
+		A03F0CB4178E207F00EDBD03 /* NSDictionary+SIOAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+SIOAdditions.h"; sourceTree = "<group>"; };
+		A03F0CB5178E207F00EDBD03 /* NSDictionary+SIOAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+SIOAdditions.m"; sourceTree = "<group>"; };
+		A059D2E2178C8C3F0026733E /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		A059D2E3178C8C3F0026733E /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		A059D2E9178C8E570026733E /* duck.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = duck.jpeg; sourceTree = "<group>"; };
+		A059D2EC178C93030026733E /* duck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = duck.png; sourceTree = "<group>"; };
+		A059D2EF178C93F00026733E /* goose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goose.png; sourceTree = "<group>"; };
+		A059D2F0178C93F00026733E /* goose.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = goose.jpeg; sourceTree = "<group>"; };
+		A059D2F5178CCA160026733E /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
+		A059D2F6178CCA160026733E /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		A059D2F9178D115C0026733E /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		A059D2FC178D15760026733E /* SIOAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIOAddressBook.h; sourceTree = "<group>"; };
+		A059D2FD178D15760026733E /* SIOAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIOAddressBook.m; sourceTree = "<group>"; };
 		A090F85D177AA01600683B6D /* Smooth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smooth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A090F860177AA01600683B6D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A090F862177AA01600683B6D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -92,6 +133,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A059D2FA178D115C0026733E /* AddressBook.framework in Frameworks */,
 				A090F861177AA01600683B6D /* UIKit.framework in Frameworks */,
 				A090F863177AA01600683B6D /* Foundation.framework in Frameworks */,
 				A090F865177AA01600683B6D /* CoreGraphics.framework in Frameworks */,
@@ -111,22 +153,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A02B30AA178E5BB200E0B949 /* User Defaults */ = {
+			isa = PBXGroup;
+			children = (
+				A02B30AB178E5BC900E0B949 /* SIOUserDefaults.h */,
+				A02B30AC178E5BC900E0B949 /* SIOUserDefaults.m */,
+			);
+			name = "User Defaults";
+			sourceTree = "<group>";
+		};
 		A03AE371177AA3100050ECD9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A02B30AA178E5BB200E0B949 /* User Defaults */,
+				A03F0CAF178E1E7900EDBD03 /* Alert View */,
+				A03F0CAA178DFBB500EDBD03 /* StatusBar Message */,
+				A059D2FB178D15330026733E /* Address */,
 				A03AE372177AA3260050ECD9 /* Smooth.h */,
 				A03AE373177AA3260050ECD9 /* Smooth.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
 		};
-		A03AE37A177AA4B60050ECD9 /* Extensions */ = {
+		A03AE37A177AA4B60050ECD9 /* UIColor+Expanded */ = {
 			isa = PBXGroup;
 			children = (
 				A03AE376177AA4AE0050ECD9 /* UIColor+Expanded.h */,
 				A03AE377177AA4AE0050ECD9 /* UIColor+Expanded.m */,
 			);
-			name = Extensions;
+			name = "UIColor+Expanded";
 			sourceTree = "<group>";
 		};
 		A03AE37B177AA54E0050ECD9 /* Controller */ = {
@@ -216,6 +271,70 @@
 			name = JQuery;
 			sourceTree = "<group>";
 		};
+		A03F0CA5178DF99000EDBD03 /* Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				A059D2F6178CCA160026733E /* Base64.h */,
+				A059D2F5178CCA160026733E /* Base64.m */,
+			);
+			name = Base64;
+			sourceTree = "<group>";
+		};
+		A03F0CA9178DFA9100EDBD03 /* MTStatusBarOverlay */ = {
+			isa = PBXGroup;
+			children = (
+				A03F0CA6178DFA8900EDBD03 /* MTStatusBarOverlay.h */,
+				A03F0CA7178DFA8900EDBD03 /* MTStatusBarOverlay.m */,
+			);
+			name = MTStatusBarOverlay;
+			sourceTree = "<group>";
+		};
+		A03F0CAA178DFBB500EDBD03 /* StatusBar Message */ = {
+			isa = PBXGroup;
+			children = (
+				A03F0CAB178DFBDB00EDBD03 /* SIOStatusBarMessage.h */,
+				A03F0CAC178DFBDB00EDBD03 /* SIOStatusBarMessage.m */,
+			);
+			name = "StatusBar Message";
+			sourceTree = "<group>";
+		};
+		A03F0CAF178E1E7900EDBD03 /* Alert View */ = {
+			isa = PBXGroup;
+			children = (
+				A03F0CB0178E1EA600EDBD03 /* SIOAlertView.h */,
+				A03F0CB1178E1EA600EDBD03 /* SIOAlertView.m */,
+			);
+			name = "Alert View";
+			sourceTree = "<group>";
+		};
+		A03F0CB3178E205100EDBD03 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				A03F0CB4178E207F00EDBD03 /* NSDictionary+SIOAdditions.h */,
+				A03F0CB5178E207F00EDBD03 /* NSDictionary+SIOAdditions.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		A059D2E1178C8C3F0026733E /* NSData-Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				A059D2E2178C8C3F0026733E /* NSData+Base64.h */,
+				A059D2E3178C8C3F0026733E /* NSData+Base64.m */,
+			);
+			name = "NSData-Base64";
+			path = "Frameworks/NSData-Base64";
+			sourceTree = "<group>";
+		};
+		A059D2FB178D15330026733E /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				A059D2FC178D15760026733E /* SIOAddressBook.h */,
+				A059D2FD178D15760026733E /* SIOAddressBook.m */,
+			);
+			name = Address;
+			sourceTree = "<group>";
+		};
 		A090F854177AA01600683B6D = {
 			isa = PBXGroup;
 			children = (
@@ -239,7 +358,11 @@
 		A090F85F177AA01600683B6D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A03AE37A177AA4B60050ECD9 /* Extensions */,
+				A03F0CA9178DFA9100EDBD03 /* MTStatusBarOverlay */,
+				A03F0CA5178DF99000EDBD03 /* Base64 */,
+				A059D2E1178C8C3F0026733E /* NSData-Base64 */,
+				A03AE37A177AA4B60050ECD9 /* UIColor+Expanded */,
+				A059D2F9178D115C0026733E /* AddressBook.framework */,
 				A090F860177AA01600683B6D /* UIKit.framework */,
 				A090F862177AA01600683B6D /* Foundation.framework */,
 				A090F864177AA01600683B6D /* CoreGraphics.framework */,
@@ -251,6 +374,7 @@
 		A090F866177AA01600683B6D /* Smooth */ = {
 			isa = PBXGroup;
 			children = (
+				A03F0CB3178E205100EDBD03 /* Categories */,
 				A03AE371177AA3100050ECD9 /* Model */,
 				A03AE37C177AA5570050ECD9 /* View */,
 				A03AE37B177AA54E0050ECD9 /* Controller */,
@@ -263,6 +387,10 @@
 		A090F867177AA01600683B6D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A059D2EF178C93F00026733E /* goose.png */,
+				A059D2F0178C93F00026733E /* goose.jpeg */,
+				A059D2EC178C93030026733E /* duck.png */,
+				A059D2E9178C8E570026733E /* duck.jpeg */,
 				A01A3CCE1783E2740012E5B9 /* uncrustify.cfg */,
 				A090F868177AA01600683B6D /* Smooth-Info.plist */,
 				A090F869177AA01600683B6D /* InfoPlist.strings */,
@@ -378,6 +506,10 @@
 				A090F883177AA01600683B6D /* MainStoryboard_iPhone.storyboard in Resources */,
 				A090F886177AA01600683B6D /* MainStoryboard_iPad.storyboard in Resources */,
 				A01A3CCF1783E2740012E5B9 /* uncrustify.cfg in Resources */,
+				A059D2EA178C8E570026733E /* duck.jpeg in Resources */,
+				A059D2ED178C93030026733E /* duck.png in Resources */,
+				A059D2F1178C93F00026733E /* goose.png in Resources */,
+				A059D2F3178C93F00026733E /* goose.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,6 +523,10 @@
 				A090F898177AA01600683B6D /* InfoPlist.strings in Resources */,
 				A03AE38E177AAB2C0050ECD9 /* smooth.html in Resources */,
 				A03AE391177AAB4E0050ECD9 /* smooth.css in Resources */,
+				A059D2EB178C8E570026733E /* duck.jpeg in Resources */,
+				A059D2EE178C93030026733E /* duck.png in Resources */,
+				A059D2F2178C93F00026733E /* goose.png in Resources */,
+				A059D2F4178C93F00026733E /* goose.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,6 +558,14 @@
 				A090F87A177AA01600683B6D /* SmoothViewController.m in Sources */,
 				A03AE374177AA3260050ECD9 /* Smooth.m in Sources */,
 				A03AE378177AA4AE0050ECD9 /* UIColor+Expanded.m in Sources */,
+				A059D2E5178C8C3F0026733E /* NSData+Base64.m in Sources */,
+				A059D2F7178CCA160026733E /* Base64.m in Sources */,
+				A059D2FE178D15760026733E /* SIOAddressBook.m in Sources */,
+				A03F0CA8178DFA8900EDBD03 /* MTStatusBarOverlay.m in Sources */,
+				A03F0CAD178DFBDB00EDBD03 /* SIOStatusBarMessage.m in Sources */,
+				A03F0CB2178E1EA600EDBD03 /* SIOAlertView.m in Sources */,
+				A03F0CB6178E207F00EDBD03 /* NSDictionary+SIOAdditions.m in Sources */,
+				A02B30AD178E5BC900E0B949 /* SIOUserDefaults.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +576,9 @@
 				A090F89B177AA01600683B6D /* SmoothTests.m in Sources */,
 				A03AE375177AA3260050ECD9 /* Smooth.m in Sources */,
 				A03AE379177AA4AE0050ECD9 /* UIColor+Expanded.m in Sources */,
+				A059D2E6178C8C3F0026733E /* NSData+Base64.m in Sources */,
+				A059D2F8178CCA160026733E /* Base64.m in Sources */,
+				A059D2FF178D15760026733E /* SIOAddressBook.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,10 +689,14 @@
 		A090F89F177AA01600683B6D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Francesco Pinto (9RBLA29TN3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Francesco Pinto (9RBLA29TN3)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Smooth/Smooth-Prefix.pch";
 				INFOPLIST_FILE = "Smooth/Smooth-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9C0272D5-9B91-44C8-9B44-755E13C1C4F9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9C0272D5-9B91-44C8-9B44-755E13C1C4F9";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -553,10 +704,14 @@
 		A090F8A0177AA01600683B6D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Francesco Pinto (9RBLA29TN3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Francesco Pinto (9RBLA29TN3)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Smooth/Smooth-Prefix.pch";
 				INFOPLIST_FILE = "Smooth/Smooth-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9C0272D5-9B91-44C8-9B44-755E13C1C4F9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9C0272D5-9B91-44C8-9B44-755E13C1C4F9";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

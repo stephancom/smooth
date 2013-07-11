@@ -6,11 +6,12 @@
 //  Copyright (c) 2013 Smooth.IO. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "SIOAlertView.h"
 
-@interface SmoothViewController : UIViewController <UIWebViewDelegate>
+@interface SmoothViewController : UIViewController <UIWebViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SIOAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (nonatomic, retain) SIOAlertView *alert;
 
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)showImageButtonPressed:(UIBarButtonItem *)sender;

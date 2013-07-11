@@ -55,6 +55,22 @@
 	[listenerList addObject:handler];
 }
 
++ (void)on:(NSString *)type performAsyncPayload:(SmoothAsyncHandlerPayload)handler {
+	Smooth *instance = [Smooth sharedInstance];
+    
+	NSDictionary *listeners = [instance listeners];
+    
+	NSMutableArray *listenerList = [listeners objectForKey:type];
+    
+	if (listenerList == nil) {
+		listenerList = [[NSMutableArray alloc] init];
+        
+		[instance.listeners setValue:listenerList forKey:type];
+	}
+    
+	[listenerList addObject:handler];
+}
+
 + (void)off:(NSString *)type {
 	Smooth *instance = [Smooth sharedInstance];
     
@@ -67,6 +83,25 @@
 }
 
 + (void)send:(NSString *)type withPayload:(id)payload toWebView:(UIWebView *)webView perform:(void (^)())complete {
+	Smooth *smooth = [Smooth sharedInstance];
+    
+	NSNumber *messageId = smooth.messageCount;
+    
+	if (complete != nil) {
+		[smooth.callbacks setValue:complete forKey:[messageId stringValue]];
+	}
+    
+	NSError *err;
+	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:payload options:NSJSONWritingPrettyPrinted error:&err];
+	NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+	NSString *javascript = [NSString stringWithFormat:@"Smooth.trigger(\"%@\", %i, %@);", type, [messageId integerValue], jsonString];
+    
+	[webView stringByEvaluatingJavaScriptFromString:javascript];
+    
+	smooth.messageCount = @([smooth.messageCount integerValue] + 1);
+}
+
++ (void)send:(NSString *)type withPayload:(id)payload toWebView:(UIWebView *)webView performPayload:(void (^)(NSDictionary* dict))complete {
 	Smooth *smooth = [Smooth sharedInstance];
     
 	NSNumber *messageId = smooth.messageCount;

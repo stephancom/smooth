@@ -84,7 +84,6 @@
 					self.dispatcher.sendCallback(messageId);
 				}
 			};
-
 			for (var index = 0; index < listenerList.length; index++) {
 				var listener = listenerList[index];
 				if (listener.length <= 1) {
@@ -94,12 +93,10 @@
 					listener(json, complete);
 				}
 			}
-
 		},
 		triggerCallback: function(id) {
 			this.dispatcher.triggerCallback(id);
 		},
-
 		createEnvelope: function(id, type, payload) {
 			return {
 				id: id,
