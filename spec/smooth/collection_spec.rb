@@ -2,8 +2,8 @@ require "spec_helper"
 
 describe Smooth::Collection do
   let(:collection) { Smooth::Collection.new(namespace: "test") }
-  
-  before(:all) do  
+
+  before(:all) do
     5.times do |n|
       collection.backend.create(name:"Item #{ n }")
     end
@@ -36,7 +36,7 @@ describe Smooth::Collection do
     collection.length.should == 1
   end
 
-  it "should support redis backends" do 
+  it "should support redis backends" do
     backend = Smooth::Collection.new(backend:"redis",namespace:"test").backend
     backend.should respond_to(:index)
   end
@@ -47,4 +47,11 @@ describe Smooth::Collection do
     }.should_not raise_error
   end
 
+  describe "The Sync Interface" do
+    it "should read the models from the collection" do
+      collection.reset([])
+      collection.sync
+      collection.models.length.should == 5
+    end
+  end
 end

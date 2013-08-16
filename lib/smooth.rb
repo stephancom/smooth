@@ -27,6 +27,7 @@ module Smooth
 
   require 'smooth/adapters/redis_cache.rb'
 
+  require 'smooth/model'
   require 'smooth/collection/cacheable'
   require 'smooth/collection/query'
   require 'smooth/collection'

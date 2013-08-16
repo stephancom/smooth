@@ -46,6 +46,40 @@ module Smooth
         @cache_adapter = create_cache_adapter(options[:cache])
       end
 
+      @model_class = options[:model_class] || Smooth::Model
+
+      @models = Array(options[:models])
+    end
+
+    def sync method="read", model={}, options={}, &block
+
+      case method.to_sym
+
+      when :read
+        fetch_from_index
+      when :update
+        model = data_to_model(model,options)
+        backend.update model.to_json
+        fetch_from_index
+      when :create
+        model = data_to_model(model,options)
+        backend.create model.to_json
+        fetch_from_index
+      when :destroy
+        backend.destroy model.id
+      else
+        fetch_from_index
+      end
+    end
+
+    def add data={}, options={}
+      options[:collection] = self
+
+      model = data_to_model(data, options)
+
+      @models << model
+
+      model
     end
 
     def models
@@ -62,7 +96,7 @@ module Smooth
 
       return backend.query(query) unless cacheable?
 
-      cache_adapter.fetch(query.cache_key) do 
+      cache_adapter.fetch(query.cache_key) do
         backend.query(query)
       end
     end
@@ -77,7 +111,7 @@ module Smooth
     end
 
     def reset models=nil
-      @models = Array(models)      
+      @models = Array(models)
     end
 
     def length
@@ -85,13 +119,30 @@ module Smooth
     end
 
     private
+      def fetch_from_index
+        @models = Array(backend && backend.index)
+      end
+
+      def data_to_model data={}, options={}
+        if data.class.ancestors.include?(Smooth::Model)
+          model = data
+        elsif data.is_a?(Hash)
+          model = model_class.new(data, options)
+        end
+
+        model.collection ||= self
+      end
+
+      def model_class
+        @model_class || Smooth::Model
+      end
       def cache_adapter
         @cache_adapter
       end
 
       def cacheable?
         !!(options[:cache])
-      end 
+      end
 
       def apply_scope_parameters_to query={}
         query
@@ -118,6 +169,6 @@ module Smooth
 
       def validate_backend
         raise InvalidBackend unless backend.respond_to?(:query)
-      end    
+      end
   end
 end
