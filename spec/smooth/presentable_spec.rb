@@ -55,6 +55,16 @@ describe Smooth::Presentable do
       end
     end
 
+    it "should use a role based presenter format if specified" do
+      FriendPresenter.should_receive(:role_custom).at_least(:once)
+      Friend.present({}).as(:custom).to(:role).to_a
+    end
+
+    it "should fall back to the non-role based presenter if there isn't a format specifically defined for the role" do
+      FriendPresenter.should_receive(:custom).at_least(:once)
+      Friend.present({}).as(:custom).to(:default).to_a
+    end
+
     it "should use the default format if an unknown format is requested" do
       lambda {
         PresentableHelper.new(name:"Sup").present_as(:sheeeeit)

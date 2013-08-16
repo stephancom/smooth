@@ -3,8 +3,13 @@
 
 ### Syncable Cross Platform Persistence 
 
-Smooth.io is a library intended to provide persistence that just works. Easy backbone inspired collections which 
-work on both the client and the server and automatically stay in sync with one another. 
+Smooth.io is provides a free JSON API out of the box, with a declarative syntax 
+to control who can query the API, and what they are able to see.  
+
+Smooth resources expose configuration data in their API endpoints that
+allow for API clients to discover reource, configure themselves to the data schema.
+
+Smooth resources have automatic caching with smart expiration, and built in HTTP cache control.
 
 - Swappable Storage Backends 
   - [ ] Redis Backend
@@ -15,11 +20,12 @@ work on both the client and the server and automatically stay in sync with one a
   - [ ] Squeel
   - [ ] Backbone-Query
 
-- Interfaces
+- REST Interfaces
+  - [ ] Rails Controller
   - [ ] Restful Sinatra App 
-  - [ ] Faye Pub/Sub
+  - [ ] Faye Pub/Sub fo Auto-Syncing
 
-- Clients
+- Clients / Syncing
   - [ ] Ruby
   - [ ] Coffeescript
   - [ ] iOS

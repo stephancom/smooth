@@ -55,6 +55,16 @@ module Smooth
         end
       end
 
+      def presenter_format_for_role(recipient=:default, format=:default)
+        if presenter_class.respond_to?("#{ recipient }_#{ format }")
+          "#{ recipient }_#{ format }"
+        elsif presenter_class.respond_to?("#{ format }")
+          format
+        else
+          :default
+        end
+      end
+
       def present params={}
         scope = scoped
         scope = query(params) if ancestors.include?(Smooth::Queryable)

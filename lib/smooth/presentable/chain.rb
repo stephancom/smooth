@@ -7,7 +7,7 @@ module Smooth
     #   .to(user)
     #
     class Chain
-      attr_accessor :scope, :format, :recipient
+      attr_accessor :scope, :format, :recipient, :presenter_method
 
       def initialize(scope)
         @scope      = scope
@@ -26,8 +26,10 @@ module Smooth
       end
 
       def results
+        @presenter_method ||= scope.klass.presenter_format_for_role(recipient, format)
+
         @results ||= scope.map do |record|
-          record.present_as(format)
+          record.present_as(presenter_method)
         end
       end
 
