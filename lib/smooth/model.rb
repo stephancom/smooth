@@ -18,17 +18,40 @@ module Smooth
       @attributes[key.to_sym]
     end
 
-    def set(key, value, options=nil)
-      @attributes[key.to_sym] = value
+    def set(key, value=nil, options=nil)
+      case
+        when value.present? && key.respond_to?(:to_sym)
+          @attributes[key.to_sym] = value
+        when value.nil? && key.is_a?(Hash)
+          @attributes = key
+      end
+
       self
     end
 
+    # This should delegate to the collection sync method
+    # which is capable of getting a single record
     def sync method=nil, model=nil, options={}
       model ||= self
       method ||= :read
       method = :create if is_new?
 
       collection && collection.sync(method, model, options)
+    end
+
+    # the collection should implement this single object find
+    def fetch
+      return self unless self.id
+
+      model_attributes = sync(:read,self).detect do |item|
+        item[id_field] == self.id
+      end
+
+      if model_attributes.is_a?(Hash)
+        self.set(model_attributes)
+      end
+
+      self
     end
 
     def is_new?

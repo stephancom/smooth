@@ -18,7 +18,7 @@ describe Smooth::Model do
     new_model = Smooth::Model.new({id:1},collection: collection)
     new_model.fetch
 
-    new_model.get("name").should == "Item 1"
+    new_model.get("name").should == "Item 0"
   end
 
   it "should delegate its sync method to the collection" do
