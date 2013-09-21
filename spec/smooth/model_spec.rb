@@ -1,10 +1,15 @@
 require "spec_helper"
 
 describe Smooth::Model do
+
+  class SmoothModelHelper < Smooth::Model
+    attribute :name, String
+  end
+
   let(:model) { collection.models[0] || collection.add(name:"Item 1",id:1) }
 
   let(:collection) do
-    collection = Smooth::Collection.new(namespace:"model:spec",backend:"file")
+    collection = Smooth::Collection.new(namespace:"model:spec",backend:"file", model_class: SmoothModelHelper)
 
     5.times do |n|
       id = n + 1
@@ -15,10 +20,9 @@ describe Smooth::Model do
   end
 
   it "should read its attributes from the collections data source" do
-    new_model = Smooth::Model.new({id:1},collection: collection)
+    new_model = SmoothModelHelper.new({id:1}, collection: collection)
     new_model.fetch
-
-    new_model.get("name").should == "Item 0"
+    new_model.name.should == "Item 0"
   end
 
   it "should delegate its sync method to the collection" do

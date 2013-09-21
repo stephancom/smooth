@@ -2,31 +2,24 @@ require 'json'
 
 module Smooth
   class Model
-    attr_accessor :attributes, :options, :collection
+
+    include Virtus
+
+    attr_accessor :model_attributes, :collection, :model_options
 
     InvalidRecord = Class.new(Exception)
 
     def initialize(attributes={},options={})
-      @attributes = attributes.dup.symbolize_keys
-      @options = options.dup
-      @collection = options[:collection]
+      @model_options  = options.dup
+      @collection     = options[:collection]
 
       raise InvalidRecord unless attributes.is_a?(Hash)
-    end
 
-    def get(key)
-      @attributes[key.to_sym]
-    end
 
-    def set(key, value=nil, options=nil)
-      case
-        when value.present? && key.respond_to?(:to_sym)
-          @attributes[key.to_sym] = value
-        when value.nil? && key.is_a?(Hash)
-          @attributes = key
-      end
+      extend(Virtus)
+      attribute :id, String
 
-      self
+      super(attributes)
     end
 
     # This should delegate to the collection sync method
@@ -36,7 +29,7 @@ module Smooth
       method ||= :read
       method = :create if is_new?
 
-      collection && collection.sync(method, model, options)
+      collection.sync(method, model, options)
     end
 
     # the collection should implement this single object find
@@ -44,11 +37,11 @@ module Smooth
       return self unless self.id
 
       model_attributes = sync(:read,self).detect do |item|
-        item[id_field] == self.id
+        item[id_field].to_s == self.id.to_s
       end
 
       if model_attributes.is_a?(Hash)
-        self.set(model_attributes)
+        self.send(:set_attributes, model_attributes)
       end
 
       self
@@ -59,21 +52,21 @@ module Smooth
     end
 
     def id
-      @id ||= @attributes[id_field]
+      attributes.fetch(:id, nil)
     end
 
     def as_json
-      @attributes
+      to_hash rescue @attributes
     end
 
     def to_json
-      JSON.stringify(as_json)
+      JSON.generate(as_json)
     end
 
     protected
 
       def id_field
-        options[:id_field] || :id
+        model_options.fetch(:id_field, :id)
       end
   end
 end

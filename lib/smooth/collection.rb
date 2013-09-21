@@ -52,18 +52,17 @@ module Smooth
     end
 
     def sync method="read", model={}, options={}, &block
-
       case method.to_sym
 
       when :read
         fetch_from_index
       when :update
         model = data_to_model(model,options)
-        backend.update model.to_json
+        backend.update model.as_json
         fetch_from_index
       when :create
         model = data_to_model(model,options)
-        backend.create model.to_json
+        backend.create model.as_json
         fetch_from_index
       when :destroy
         backend.destroy model.id
@@ -83,7 +82,9 @@ module Smooth
     end
 
     def models
-      Array(@models)
+      Array(@models).map do |model|
+        data_to_model model, collection: self
+      end
     end
 
     def url
@@ -131,11 +132,14 @@ module Smooth
         end
 
         model.collection ||= self
+
+        model
       end
 
       def model_class
         @model_class || Smooth::Model
       end
+
       def cache_adapter
         @cache_adapter
       end

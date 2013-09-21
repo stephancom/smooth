@@ -19,6 +19,8 @@ module Smooth
 
         @data_directory       = options[:data_directory]
         restore if ::File.exists?(storage_path)
+
+        setup_periodic_flushing
       end
 
 
@@ -36,12 +38,12 @@ module Smooth
       end
 
       def setup_periodic_flushing
-        @periodic_flusher = Thread.new do
+        @periodic_flusher ||= Thread.new do
           while true
-            flush 
+            flush
             sleep 20
           end
-        end          
+        end
       end
 
       protected
@@ -64,15 +66,15 @@ module Smooth
           return if !force && throttled?
 
           ::File.open(storage_path,'w+') do |fh|
-            fh.puts( JSON.generate(storage) )            
+            fh.puts( JSON.generate(storage) )
             @last_flushed_at = Time.now.to_i
           end
         end
 
         def data_directory
-          @data_directory || self.class.data_directory          
+          @data_directory || self.class.data_directory
         end
 
     end
   end
-end  
+end
