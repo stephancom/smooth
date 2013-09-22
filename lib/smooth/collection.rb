@@ -6,12 +6,32 @@ module Smooth
 
     attr_reader :options, :backend
 
+    class << self
+      attr_accessor :model_class,
+                    :backend,
+                    :namespace
+    end
+
+    def self.uses_model model=Smooth::Model
+      self.model_class = model
+      self
+    end
+
+    def self.uses_namespace namespace="smooth:collections"
+      self.namespace = namespace
+      self
+    end
+
+    def self.uses_backend backend=:file
+      self.backend = backend
+      self
+    end
+
     # Create an instance of a Smooth::Collection.
     #
     # Examples:
     #
     #   Smooth::Collection.new(namespace: "namespace", backend: "file")
-    #
     #
     def initialize namespace, options={}
       if namespace.is_a?(Hash)
@@ -46,7 +66,7 @@ module Smooth
         @cache_adapter = create_cache_adapter(options[:cache])
       end
 
-      @model_class = options[:model_class] || Smooth::Model
+      @model_class = options[:model_class] || self.class.model_class
 
       @models = Array(options[:models])
     end

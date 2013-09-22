@@ -2,11 +2,16 @@ require 'active_support/core_ext'
 require 'active_record'
 require 'typhoeus'
 require 'redis'
+require 'redis-namespace'
 require 'squeel'
 require 'virtus'
 
 module Smooth
-  DataDirectory = File.join(ENV['HOME'],'.smooth')
+  mattr_accessor :data_directory
+
+  def self.data_directory
+    @@data_directory || File.join(ENV['HOME'],'.smooth')
+  end
 
   require 'smooth/version'
   require 'smooth/meta_data'

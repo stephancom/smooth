@@ -6,7 +6,7 @@ module Smooth
         attr_accessor :data_directory, :flush_threshold
       end
 
-      self.data_directory = Smooth::DataDirectory
+      self.data_directory = Smooth.data_directory
       self.flush_threshold = 300
 
       FileUtils.mkdir_p(data_directory)
