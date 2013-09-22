@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'redis'
   s.add_dependency 'redis-namespace'
   s.add_dependency 'typhoeus'
-  s.add_dependency 'virtus'
+  s.add_dependency 'virtus', '0.5.5'
   s.add_dependency 'faye'
   s.add_dependency 'sinatra'
   s.add_dependency 'squeel'

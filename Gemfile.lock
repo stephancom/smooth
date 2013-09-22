@@ -10,7 +10,7 @@ PATH
       sinatra
       squeel
       typhoeus
-      virtus
+      virtus (= 0.5.5)
 
 GEM
   remote: https://rubygems.org/
