@@ -8,13 +8,13 @@ module Smooth
     attr_accessor :model_attributes, :collection, :model_options
 
     InvalidRecord = Class.new(Exception)
+    InvalidCollection = Class.new(Exception)
 
     def initialize(attributes={},options={})
       @model_options  = options.dup
-      @collection     = options[:collection]
+      @collection     = options[:collection] if options[:collection]
 
       raise InvalidRecord unless attributes.is_a?(Hash)
-
 
       extend(Virtus)
       attribute :id, String
@@ -28,6 +28,8 @@ module Smooth
       model ||= self
       method ||= :read
       method = :create if is_new?
+
+      raise InvalidCollection unless collection.respond_to?(:sync)
 
       collection.sync(method, model, options)
     end

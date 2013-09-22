@@ -173,7 +173,7 @@ module Smooth
       end
 
       def namespace
-        namespace = options[:namespace]
+        namespace = options[:namespace] || self.class.namespace
 
         if options[:backend] == "active_record" and options[:model] and namespace.nil?
           namespace = options[:model].table_name

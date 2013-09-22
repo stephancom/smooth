@@ -19,6 +19,10 @@ describe Smooth::Model do
     collection
   end
 
+  it "should have basic attributes as configured" do
+    SmoothModelHelper.new(name:"sup baby").name.should == "sup baby"
+  end
+
   it "should read its attributes from the collections data source" do
     new_model = SmoothModelHelper.new({id:1}, collection: collection)
     new_model.fetch
