@@ -5,14 +5,14 @@ module Smooth
 
     include Virtus
 
-    attr_accessor :model_attributes, :_collection, :model_options
+    attr_accessor :model_attributes, :collection, :model_options
 
     InvalidRecord = Class.new(Exception)
     InvalidCollection = Class.new(Exception)
 
     def initialize(attributes={},options={})
       @model_options  = options.dup
-      @_collection     = options[:collection] if options[:collection]
+      @collection     = options[:collection] if options[:collection]
 
       raise InvalidRecord unless attributes.is_a?(Hash)
 
@@ -29,9 +29,9 @@ module Smooth
       method ||= :read
       method = :create if is_new?
 
-      raise InvalidCollection unless _collection.respond_to?(:sync)
+      raise InvalidCollection unless collection.respond_to?(:sync)
 
-      _collection.sync(method, model, options)
+      collection.sync(method, model, options)
     end
 
     # the collection should implement this single object find

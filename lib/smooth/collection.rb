@@ -151,7 +151,7 @@ module Smooth
           model = model_class.new(data, options)
         end
 
-        model._collection ||= self
+        model.collection ||= self
 
         model
       end
