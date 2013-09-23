@@ -29,7 +29,7 @@ module Smooth
       method ||= :read
       method = :create if is_new?
 
-      raise InvalidCollection unless collection.respond_to?(:sync)
+      raise InvalidCollection unless collection && collection.respond_to?(:sync)
 
       collection.sync(method, model, options)
     end
