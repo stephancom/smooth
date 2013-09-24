@@ -4,9 +4,13 @@ describe Smooth::Collection do
   let(:collection) { Smooth::Collection.new(namespace: "test") }
 
   before(:all) do
-    5.times do |n|
-      collection.backend.create(name:"Item #{ n }")
-    end
+    5.times {|n| collection.backend.create(name:"Item #{ n }")}
+  end
+
+  it "should add a model to the collection but not save it" do
+    model = collection.add(name: "Item 8")
+    model.should be_a(Smooth::Model)
+    model.name.should == "Item 8"
   end
 
   it "should have a file backend by default" do
@@ -17,13 +21,9 @@ describe Smooth::Collection do
   	collection.url.should match(/test/)
   end
 
-  it "should have an array of models" do
-    collection.models.should be_an(Array)
-  end
-
   it "should fetch some models" do
     collection.fetch()
-    collection.models.length.should == 5
+    collection.models.should_not be_empty
   end
 
   it "should allow me to query it" do

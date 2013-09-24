@@ -2,7 +2,6 @@ require 'json'
 
 module Smooth
   class Model
-
     include Virtus
 
     attr_accessor :model_attributes, :collection, :model_options
@@ -16,34 +15,38 @@ module Smooth
 
       raise InvalidRecord unless attributes.is_a?(Hash)
 
-      extend(Virtus)
-      attribute :id, String
-
       super(attributes)
     end
 
     # This should delegate to the collection sync method
     # which is capable of getting a single record
-    def sync method=nil, model=nil, options={}
-      model ||= self
-      method ||= :read
-      method = :create if is_new?
-
+    def sync method=:read, *args
       raise InvalidCollection unless collection && collection.respond_to?(:sync)
 
-      collection.sync(method, model, options)
+      case
+
+      when is_new?
+        collection.sync(:create, self)
+      when !is_new? && method == :update
+        collection.sync(:update, self)
+      else
+        collection.sync(:read)
+      end
+
+      fetch
+
     end
 
     # the collection should implement this single object find
     def fetch
       return self unless self.id
 
-      model_attributes = sync(:read,self).detect do |item|
+      model = collection.models.detect do |item|
         item[id_field].to_s == self.id.to_s
       end
 
-      if model_attributes.is_a?(Hash)
-        self.send(:set_attributes, model_attributes)
+      if model && model.attributes.is_a?(Hash)
+        self.send(:set_attributes, model.attributes)
       end
 
       self

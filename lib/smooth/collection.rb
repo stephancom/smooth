@@ -81,8 +81,8 @@ module Smooth
         backend.update model.as_json
         fetch_from_index
       when :create
-        model = data_to_model(model,options)
-        backend.create model.as_json
+        data_to_model(model,options)
+        backend.create(model.as_json)
         fetch_from_index
       when :destroy
         backend.destroy model.id
@@ -102,8 +102,10 @@ module Smooth
     end
 
     def models
+      fetch_from_index unless @fetched
+
       Array(@models).map do |model|
-        data_to_model model, collection: self
+        data_to_model(model, collection: self)
       end
     end
 
@@ -141,6 +143,7 @@ module Smooth
 
     private
       def fetch_from_index
+        @fetched = true
         @models = Array(backend && backend.index)
       end
 

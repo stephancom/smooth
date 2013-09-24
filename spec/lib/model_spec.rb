@@ -3,6 +3,7 @@ require "spec_helper"
 describe Smooth::Model do
 
   class SmoothModelHelper < Smooth::Model
+    attribute :id, String
     attribute :name, String
   end
 
@@ -23,14 +24,14 @@ describe Smooth::Model do
     SmoothModelHelper.new(name:"sup baby").name.should == "sup baby"
   end
 
-  it "should read its attributes from the collections data source" do
+  it "should read its attributes from the collections data source given an id" do
     new_model = SmoothModelHelper.new({id:1}, collection: collection)
     new_model.fetch
     new_model.name.should == "Item 0"
   end
 
   it "should delegate its sync method to the collection" do
-    collection.should_receive(:sync).with(:read,{id:1},{})
+    collection.should_receive(:sync)
     model.sync(:read, {id:1}, {})
   end
 end
