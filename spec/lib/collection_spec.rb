@@ -1,16 +1,31 @@
 require "spec_helper"
 
 describe Smooth::Collection do
-  let(:collection) { Smooth::Collection.new(namespace: "test") }
+  class ModelHelper < Smooth::Model
+    attribute :id, String
+    attribute :name, String
+  end
+
+  let(:collection) { Smooth::Collection.new(namespace: "test", model_class: ModelHelper) }
 
   before(:all) do
     5.times {|n| collection.backend.create(name:"Item #{ n }")}
+  end
+
+  it "should set an id on the model when it is saved" do
+    model = collection.add(name:"Item 9")
+    $k = true
+    model.sync
+    $k = false
+
+    model.id.should_not be_nil
   end
 
   it "should add a model to the collection but not save it" do
     model = collection.add(name: "Item 8")
     model.should be_a(Smooth::Model)
     model.name.should == "Item 8"
+    model.id.should be_nil
   end
 
   it "should have a file backend by default" do
@@ -47,11 +62,16 @@ describe Smooth::Collection do
     }.should_not raise_error
   end
 
+  it "should empty the models when resetting" do
+    collection.reset([])
+    collection.models.should be_empty
+  end
+
   describe "The Sync Interface" do
     it "should read the models from the collection" do
       collection.reset([])
       collection.sync
-      collection.models.length.should == 5
+      collection.models.length.should >= 5
     end
   end
 end

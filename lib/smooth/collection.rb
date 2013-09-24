@@ -72,6 +72,7 @@ module Smooth
     end
 
     def sync method="read", model={}, options={}, &block
+
       case method.to_sym
 
       when :read
@@ -81,9 +82,11 @@ module Smooth
         backend.update model.as_json
         fetch_from_index
       when :create
-        data_to_model(model,options)
-        backend.create(model.as_json)
+        model = data_to_model(model,options)
+        attributes = backend.create(model.as_json)
         fetch_from_index
+
+        model = data_to_model(attributes, options)
       when :destroy
         backend.destroy model.id
       else

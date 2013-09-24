@@ -15,6 +15,11 @@ module Smooth
 
       raise InvalidRecord unless attributes.is_a?(Hash)
 
+      unless respond_to?(:id)
+        extend(Virtus)
+        self.class.attribute :id, String unless respond_to?(:id)
+      end
+
       super(attributes)
     end
 
@@ -26,7 +31,7 @@ module Smooth
       case
 
       when is_new?
-        collection.sync(:create, self)
+        self.id = collection.sync(:create, self).id
       when !is_new? && method == :update
         collection.sync(:update, self)
       else
@@ -34,7 +39,6 @@ module Smooth
       end
 
       fetch
-
     end
 
     # the collection should implement this single object find
