@@ -33,7 +33,12 @@ module Smooth
     #
     #   Smooth::Collection.new(namespace: "namespace", backend: "file")
     #
-    def initialize namespace, options={}
+    def initialize namespace, models=[], options={}
+      if models.is_a?(Hash)
+        options = models
+        models  = Array(options[:models])
+      end
+
       if namespace.is_a?(Hash)
         options = namespace
       end
@@ -49,6 +54,7 @@ module Smooth
       end
 
       options[:backend] ||= "file"
+      options[:backend] = options[:backend].to_s if options[:backend].is_a?(Symbol)
 
       if options[:backend].is_a?(String)
         @backend = "Smooth::Backends::#{ @options[:backend].camelize }".constantize.new(backend_options)
@@ -68,7 +74,7 @@ module Smooth
 
       @model_class = options[:model_class] || self.class.model_class
 
-      @models = Array(options[:models])
+      @models = models
     end
 
     def sync method="read", model={}, options={}, &block

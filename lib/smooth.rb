@@ -7,7 +7,11 @@ require 'squeel'
 require 'virtus'
 
 module Smooth
-  mattr_accessor :data_directory
+  mattr_accessor :data_directory, :namespace
+
+  def self.namespace
+    @@namespace || "smooth"
+  end
 
   def self.data_directory
     @@data_directory || File.join(ENV['HOME'],'.smooth')
@@ -28,6 +32,7 @@ module Smooth
   require 'smooth/backends/active_record'
   require 'smooth/backends/file'
   require 'smooth/backends/redis'
+  require 'smooth/backends/redis_namespace'
   require 'smooth/backends/rest_client'
 
   require 'smooth/adapters/redis_cache.rb'
@@ -35,7 +40,7 @@ module Smooth
   require 'smooth/model'
   require 'smooth/collection/cacheable'
   require 'smooth/collection/query'
-  require 'smooth/collection'
 
+  require 'smooth/collection'
   require "smooth/resource"
 end

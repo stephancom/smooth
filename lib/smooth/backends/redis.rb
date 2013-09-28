@@ -5,9 +5,11 @@ module Smooth
                   :namespace
 
       def initialize options={}
+        redis = ::Redis.new(options[:redis_options] || {})
+
         @namespace        = options[:namespace]
         @priority         = options[:priority] || 0
-        @connection       = ::Redis.new()
+        @connection       = ::Redis::Namespace.new(Smooth.namespace, redis: redis)
       end
 
       def create attributes={}
@@ -34,7 +36,7 @@ module Smooth
 
       def index
         records = connection.hvals("#{ namespace }:records")
-      end 
+      end
 
       def show id
         record = connection.hget("#{ namespace }:records", id)
