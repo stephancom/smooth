@@ -9,7 +9,12 @@ module Smooth
 
         @namespace        = options[:namespace]
         @priority         = options[:priority] || 0
-        @connection       = ::Redis::Namespace.new(Smooth.namespace, redis: redis)
+
+        if options[:use_redis_namespace]
+          @connection       = ::Redis::Namespace.new(Smooth.namespace, redis: redis)
+        else
+          @connection = redis
+        end
       end
 
       def create attributes={}
@@ -36,6 +41,8 @@ module Smooth
 
       def index
         records = connection.hvals("#{ namespace }:records")
+        records.map! {|r| JSON.parse(r) }
+        records
       end
 
       def show id
