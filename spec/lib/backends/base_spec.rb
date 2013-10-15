@@ -10,6 +10,17 @@ describe Smooth::Backends::Base do
     backend.query(attribute:"yankee").length.should == 1
   end
 
+  it "should return an empty set for a query" do
+    backend.create(attribute:"yankee")
+    backend.query(smooth:"yankee").length.should == 0
+  end
+
+  it "should return an empty set for a query" do
+    backend.create(attribute:"smooth")
+    backend.query(attribute:"hotel").length.should == 0
+    backend.query(smooth:"attribute").length.should == 0
+  end
+
   it "should track the maximum updated at" do
     backend.maximum_updated_at.should >= Time.now.to_i
   end
@@ -56,7 +67,7 @@ describe Smooth::Backends::Base do
   end
 
   it "should allow me to update records" do
-    result = backend.create(attribute:"foxtrot",name:"wilco") 
+    result = backend.create(attribute:"foxtrot",name:"wilco")
     backend.update result.merge(name:"mermaid")
     fetched = backend.show(result[:id])
     fetched[:name].should == "mermaid"

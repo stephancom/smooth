@@ -25,7 +25,7 @@ module Smooth
         @storage[:records]
       end
 
-      def maximum_updated_at 
+      def maximum_updated_at
         @storage[:maximum_updated_at]
       end
 
@@ -52,23 +52,25 @@ module Smooth
         records[attributes[:id]] ||= attributes
       end
 
-      def destroy id 
+      def destroy id
         record = records.delete(id)
         !record.nil?
       end
-      
+
       # A Naive query method which only matches for equality
       def query params={}
         params.symbolize_keys!
 
-        Array(index).select do |record|
+        index.select do |record|
+          record.symbolize_keys!
+
           params.keys.all? do |key|
             record[key] == params[key]
           end
         end
-      end            
-      
-      protected      
+      end
+
+      protected
 
         def increment_id
           @id_counter += 1
@@ -79,4 +81,4 @@ module Smooth
         end
     end
   end
-end      
+end
