@@ -10,6 +10,9 @@ module Smooth
     InvalidCollection = Class.new(Exception)
 
     def initialize(attributes={},options={})
+      options ||= {}
+      attributes ||= {}
+
       @model_options  = options.dup
       @collection     = options[:collection] if options[:collection]
 

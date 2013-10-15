@@ -157,15 +157,22 @@ module Smooth
       end
 
       def data_to_model data={}, options={}
-        if data.class.ancestors.include?(Smooth::Model)
-          model = data
-        elsif data.is_a?(Hash)
-          model = model_class.new(data, options)
+        # hack
+        data = JSON.parse(data) if data.is_a?(String)
+
+        begin
+          if data.class.ancestors.include?(Smooth::Model)
+            model = data
+          elsif data.is_a?(Hash)
+            model = model_class.new(data, options)
+          end
+
+          model.collection ||= self
+
+          model
+        rescue
+          binding.pry if $k
         end
-
-        model.collection ||= self
-
-        model
       end
 
       def model_class
