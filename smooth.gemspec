@@ -2,7 +2,7 @@ $:.push File.expand_path("../lib", __FILE__)
 require 'smooth/version'
 
 Gem::Specification.new do |s|
-  s.name          = "smooth"
+  s.name          = "smooth-io"
   s.version       = Smooth::Version
   s.platform      = Gem::Platform::RUBY
   s.authors       = ["Jonathan Soeder"]
