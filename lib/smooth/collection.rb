@@ -53,13 +53,6 @@ module Smooth
         options[:backend] = "active_record"
       end
 
-      options[:backend] ||= "file"
-      options[:backend] = options[:backend].to_s if options[:backend].is_a?(Symbol)
-
-      if options[:backend].is_a?(String)
-        @backend = "Smooth::Backends::#{ @options[:backend].camelize }".constantize.new(backend_options)
-      end
-
       validate_backend
 
       if options[:cache].is_a?(String)
@@ -110,6 +103,16 @@ module Smooth
       model
     end
 
+    def find_by attribute, value
+      q = {}
+      q[attribute.to_sym] = value
+      data_to_model query(q).first
+    end
+
+    def find id
+      find_by(:id, id)
+    end
+
     def models
       fetch_from_index unless @fetched
 
@@ -157,7 +160,6 @@ module Smooth
       end
 
       def data_to_model data={}, options={}
-        # hack
         data = JSON.parse(data) if data.is_a?(String)
 
         begin
@@ -202,16 +204,33 @@ module Smooth
       end
 
       def backend_options
-        return options[:backend_options] if options[:backend_options]
-
         default = {namespace: namespace}
         default[:model] ||= options[:model]
 
+        default.merge!(backend_options: options.fetch(:backend_options,{}))
         default
       end
 
+      def configure_backend
+        options[:backend] ||= self.class.backend || "file"
+        options[:backend] = options[:backend].to_s if options[:backend].is_a?(Symbol)
+
+        if options[:backend].is_a?(String)
+          klass = if options[:backend].match(/::/)
+            options[:backend]
+          else
+            "Smooth::Backends::#{ options[:backend].camelize }"
+          end
+
+          @backend = klass.constantize.new(backend_options)
+        end
+      end
+
       def validate_backend
+        configure_backend unless @backend
+
         raise InvalidBackend unless backend.respond_to?(:query)
+        @backend
       end
   end
 end

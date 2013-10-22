@@ -30,6 +30,23 @@ describe Smooth::Model do
     new_model.name.should == "Item 0"
   end
 
+  it "should save and update" do
+    model = SmoothModelHelper.new({name:"j-money baby"}, collection: collection)
+    model.name = "sup my boo"
+    model.save
+
+    collection.fetch
+    collection.models.detect {|m| m.name == "sup my boo" }.should be_present
+  end
+
+  it "should save and create" do
+    model = SmoothModelHelper.new({name:"j-money"}, collection: collection)
+    model.save
+
+    collection.models.detect {|m| m.name == "j-money" }.should be_present
+    model.id.to_i.should >= 1
+  end
+
   it "should delegate its sync method to the collection" do
     collection.should_receive(:sync)
     model.sync(:read, {id:1}, {})

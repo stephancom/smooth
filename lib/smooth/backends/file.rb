@@ -25,7 +25,7 @@ module Smooth
 
 
       def storage_path
-        ::File.join(data_directory, "#{ namespace }.json")
+        ::File.join(data_directory, "#{namespace}.json")
       end
 
       def url

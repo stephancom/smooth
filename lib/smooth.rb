@@ -13,8 +13,18 @@ module Smooth
     @@namespace || "smooth"
   end
 
+  def self.project
+    if defined?(::Rails)
+      Rails.application.class.to_s
+    end
+  end
+
+  def self.environment
+    ENV['RAILS_ENV'] || ENV['SMOOTH_ENV'] || "development"
+  end
+
   def self.data_directory
-    @@data_directory || File.join(ENV['HOME'],'.smooth')
+    @@data_directory || File.join(ENV['HOME'],'.smooth',environment)
   end
 
   require 'smooth/version'

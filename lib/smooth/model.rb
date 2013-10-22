@@ -44,6 +44,15 @@ module Smooth
       fetch
     end
 
+    def save
+      is_new? ? sync(:create) : sync(:update)
+    end
+
+    def update_attributes attributes={}
+      self.send(:set_attributes, attributes)
+      save
+    end
+
     # the collection should implement this single object find
     def fetch
       return self unless self.id
@@ -67,12 +76,12 @@ module Smooth
       attributes.fetch(:id, nil)
     end
 
-    def as_json
+    def as_json options={}
       to_hash rescue @attributes
     end
 
-    def to_json
-      JSON.generate(as_json)
+    def to_json options={}
+      JSON.generate(as_json(options))
     end
 
     protected

@@ -6,9 +6,10 @@ module Smooth
 
       def initialize options={}
         super
-        @model = options[:model]
-        model.send(:include, Smooth::Backends::ActiveRecord::QueryAdapter)
-      end      
+        if @model = options[:model]
+          model.send(:include, Smooth::Backends::ActiveRecord::QueryAdapter)
+        end
+      end
 
       def query params={}
         model.respond_to?(:query) ? model.query(params) : model.smooth_query(params)
@@ -23,7 +24,7 @@ module Smooth
       end
 
       def update attributes
-        record = model.find(attributes[:id])        
+        record = model.find(attributes[:id])
         record.update_attributes(attributes)
         record
       end
@@ -41,10 +42,10 @@ module Smooth
 
       module ClassMethods
         def smooth_query params={}
-          scoped           
+          scoped
         end
       end
-      
+
       def self.included(receiver)
         receiver.extend         ClassMethods
       end

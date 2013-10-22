@@ -67,6 +67,16 @@ describe Smooth::Collection do
     collection.models.should be_empty
   end
 
+  describe "The find methods" do
+    it "should find by id" do
+      collection.find(1).name.should == "Item 0"
+    end
+
+    it "should find by name" do
+      collection.find_by(:name,"Item 0").id.to_i.should == 1
+    end
+  end
+
   describe "The Sync Interface" do
     it "should read the models from the collection" do
       collection.reset([])
