@@ -51,4 +51,10 @@ describe Smooth::Model do
     collection.should_receive(:sync)
     model.sync(:read, {id:1}, {})
   end
+
+  it "should include additional methods" do
+    hash = model.as_json(:methods=>[:is_new?])
+    hash.should have_key(:is_new?)
+  end
+
 end

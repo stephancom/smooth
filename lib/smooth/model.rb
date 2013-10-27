@@ -77,7 +77,14 @@ module Smooth
     end
 
     def as_json options={}
-      to_hash rescue @attributes
+      base = to_hash rescue @attributes
+
+      base = Array(options[:methods]).inject(base || {}) do |memo,meth|
+        memo[meth] = send(meth) if meth && respond_to?(meth)
+        memo
+      end
+
+      base
     end
 
     def to_json options={}
