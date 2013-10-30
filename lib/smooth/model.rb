@@ -34,14 +34,22 @@ module Smooth
       case
 
       when is_new?
-        self.id = collection.sync(:create, self).id
+        unless before_save == false
+          self.id = collection.sync(:create, self).id
+        end
       when !is_new? && method == :update
-        collection.sync(:update, self)
+        unless before_save == false
+          collection.sync(:update, self)
+        end
       else
         collection.sync(:read)
       end
 
       fetch
+    end
+
+    def before_save
+      true
     end
 
     def save
