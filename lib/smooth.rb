@@ -1,5 +1,6 @@
 require 'active_support/core_ext'
 require 'active_record'
+require 'active_model_serializers'
 require 'typhoeus'
 require 'redis'
 require 'redis-namespace'
