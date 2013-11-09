@@ -3,8 +3,10 @@ module Smooth::Model::CollectionAdapter
 
   included do
     class_attribute :collection_class
+  end
 
-    create_default_collection_class if collection_class.nil?
+  def self.decorate child
+    child.create_default_collection_class if child.collection_class.nil?
   end
 
   def collection_class
@@ -20,17 +22,17 @@ module Smooth::Model::CollectionAdapter
   end
 
   module ClassMethods
-
     def collection options={}
       @collection ||= collection_class.new(self, options)
     end
 
     def create_default_collection_class
-      const_set "Collection", Class.new(Smooth::Collection)
+      instance_eval("#{ collection_class_name } = Class.new(Smooth::Collection)")
+      self.collection_class = "#{collection_class_name}".constantize
     end
 
     def collection_class_name
-      @collection_class.try(:name) || "#{self.name}::Collection"
+      (@collection_class && @collection_class.name) || "#{self.name}::Collection"
     end
 
     if "".respond_to?(:safe_constantize)

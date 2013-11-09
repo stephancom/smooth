@@ -11,6 +11,12 @@ Sham.define do
   salary   {|index| 30000 + (index * 1000)}
 end
 
+require 'smooth'
+
+class SmoothModel < Smooth::Model
+  attribute :name, String
+end
+
 RSpec.configure do |config|
   config.before(:suite) do
     Models.make
@@ -20,4 +26,3 @@ RSpec.configure do |config|
   config.before(:each)  { Sham.reset(:before_each) }
 end
 
-require 'smooth'

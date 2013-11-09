@@ -12,11 +12,13 @@ Gem::Specification.new do |s|
   s.description   = "Cross platform, syncable persistence"
 
   s.add_dependency 'activesupport', '~> 4.0.0'
+  s.add_dependency 'activerecord', '~> 4.0.0'
   s.add_dependency 'active_model_serializers', '~> 0.8.1'
   s.add_dependency 'virtus', '0.5.5'
   s.add_dependency 'redis'
   s.add_dependency 'redis-objects'
   s.add_dependency 'redis-namespace'
+  s.add_dependency "typhoeus"
 
   s.add_development_dependency 'rspec', '~> 2.6.0'
   s.add_development_dependency 'machinist', '~> 1.0.6'

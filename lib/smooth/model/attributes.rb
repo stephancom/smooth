@@ -2,13 +2,24 @@ module Smooth::Model::Attributes
   extend ActiveSupport::Concern
 
   included do
-    include Virtus
-    alias_method :original_attribute, :attribute
+  end
+
+  def self.decorate child
+    child.attribute :id, Integer
   end
 
   module ClassMethods
-    def attribute name, klass, options={}
-      original_attribute name, klass, options
+    def attribute name, type, *args
+      options = args.extract_options!
+      result = super
+
+      attribute_names << name
+
+      result
+    end
+
+    def attribute_names
+      @attribute_names ||= Set.new
     end
   end
 end
