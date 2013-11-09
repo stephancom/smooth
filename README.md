@@ -1,33 +1,9 @@
-# Smooth.io
-[![Build Status](https://travis-ci.org/datapimp/smooth.png?branch=master)](https://travis-ci.org/datapimp/smooth)
+# Smooth
 
-### Syncable Cross Platform Persistence 
+Smooth is a no headaches, no busy work system for building JSON APIs to
+work with your rich web and mobile applications.  
 
-Smooth.io is provides a free JSON API out of the box, with a declarative syntax 
-to control who can query the API, and what they are able to see.  
-
-Smooth resources expose configuration data in their API endpoints that
-allow for API clients to discover reource, configure themselves to the data schema.
-
-Smooth resources have automatic caching with smart expiration, and built in HTTP cache control.
-
-- Swappable Storage Backends 
-  - [ ] Redis Backend
-  - [ ] File Backend
-  - [ ] ActiveRecord Backend
-
-- Query Interfaces
-  - [ ] Squeel
-  - [ ] Backbone-Query
-
-- REST Interfaces
-  - [ ] Rails Controller
-  - [ ] Restful Sinatra App 
-  - [ ] Faye Pub/Sub fo Auto-Syncing
-
-- Clients / Syncing
-  - [ ] Ruby
-  - [ ] Coffeescript
-  - [ ] iOS
-  - [ ] Android
-  
+It is designed to be the first point of contact for your client
+applications, and to support the full life cycle of an application from
+a protoype with data models which change often, to an app running at scale 
+across many servers that relies heavily on caching.

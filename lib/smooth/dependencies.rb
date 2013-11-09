@@ -1,0 +1,5 @@
+require "json"
+require "active_support/core_ext"
+require "active_model_serializers"
+require "redis-objects"
+require "redis-namespace"
