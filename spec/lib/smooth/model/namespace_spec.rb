@@ -19,4 +19,14 @@ describe Smooth::Model::Namespace do
     Site.define("Layouts", base: BaseModel)
     Site::Layouts.new.should be_a(BaseModel)
   end
+
+  it "should allow me to specify config with the DSL" do
+    Site.define "Components" do
+      attribute :name, String
+      attribute :type, String
+      attribute :format, String
+    end
+
+    Site::Components.attribute_names.should include(:name,:type,:format)
+  end
 end

@@ -15,9 +15,18 @@ module Smooth::Model::Serialization
     self.class.serializer_class
   end
 
-  def read_attribute_for_serialization
-    send
+  def read_attribute_for_serialization *args
+    send(*args)
   end
+
+  def as_json options={}
+    active_model_serializer.new(self).as_json(options)
+  end
+
+  def to_hash options={}
+    active_model_serializer.new(self).serializable_hash
+  end
+
 
   module ClassMethods
     def active_model_serializer
@@ -30,6 +39,7 @@ module Smooth::Model::Serialization
 
     def serializer_class= value
       self.active_model_serializer= @serializer_class = value
+      value
     end
 
     def serializer_class_name
