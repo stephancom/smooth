@@ -1,9 +1,7 @@
-
 module Smooth::Model::Serialization
   extend ActiveSupport::Concern
 
   included do
-    Smooth::Serializer = Class.new(ActiveModel::Serializer) unless defined?(Smooth::Serializer)
     class_attribute :serializer_class
   end
 
@@ -29,6 +27,11 @@ module Smooth::Model::Serialization
 
 
   module ClassMethods
+    def attribute name, klass, *args
+      super
+      serializer_class.attribute(name)
+    end
+
     def active_model_serializer
       serializer_class
     end
@@ -47,13 +50,20 @@ module Smooth::Model::Serialization
     end
 
     def default_serializer
-      instance_eval "class ::#{ serializer_class_name } < Smooth::Serializer; end"
+      unless serializer_class_name.safe_constantize
+        class_eval "class ::#{ serializer_class_name } < ActiveModel::Serializer; end"
+      end
+
       self.serializer_class = serializer_class_name.constantize
     end
 
     def configure_serializer
       default_serializer if serializer_class.nil?
-      serializer_class.send :attributes, *attribute_names
+
+      attribute_names.each do |name|
+        serializer_class.attribute(name)
+      end
     end
+
   end
 end

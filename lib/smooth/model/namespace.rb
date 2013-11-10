@@ -8,21 +8,9 @@ class Smooth::Model::Namespace
   end
 
   def self.define model_name, options={}, &block
-    base = options.fetch(:base, Smooth::Model)
+    options[:namespace] = namespace
 
-    instance_eval %Q{
-      class #{ namespace }::#{ model_name.camelize } < #{ base }
-        def self.name
-          "#{ model_name }"
-        end
-      end
-    }
-
-    model_class = namespace.const_get(model_name.camelize)
-
-    model_class.instance_eval(&block) if block_given?
-
-    model_class
+    Smooth::Model.send :define, model_name, options, &block
   end
 
   def self.namespace

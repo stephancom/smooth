@@ -9,17 +9,13 @@ module Smooth::Model::Attributes
   end
 
   module ClassMethods
-    def attribute name, type, *args
-      options = args.extract_options!
-      result = super
-
-      attribute_names << name
-
-      result
+    def attribute *args
+      puts "Acttributes "
+      super
     end
 
     def attribute_names
-      @attribute_names ||= Set.new
+      attribute_set.map(&:name)
     end
   end
 end

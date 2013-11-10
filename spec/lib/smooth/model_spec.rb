@@ -23,15 +23,13 @@ describe SmoothModel do
     end
 
     it "should contain the attributes of the model in the serializer" do
-      SmoothModel.serializer_class = SmoothModelSerializer
-      hash = SmoothModel.new(:name => "Jonathan").to_hash
-      binding.pry
-
-      hash[:name].should == "Jonathan"
+      model = SmoothModel.new(name:"Jonathan Soeder")
+      hash = model.as_json
+      hash[:smooth_model][:name].should == "Jonathan Soeder"
     end
 
     it "should allow me to swap out the serializer" do
-      class CustomSerializer < Smooth::Serializer
+      class CustomSerializer < ActiveModel::Serializer
         attributes :full_name, :name, :id
         root :blah
 
@@ -45,6 +43,8 @@ describe SmoothModel do
       model = SmoothModel.new(name:"Jonathan",id:1)
 
       model.as_json.should have_key(:blah)
+      model.as_json[:blah][:name].should == "Jonathan"
+      model.as_json[:blah][:full_name].should == "Jonathan-1"
 
       SmoothModel.serializer_class = SmoothModelSerializer
     end

@@ -15,10 +15,10 @@ module Smooth
   InvalidRecord ||= Class.new(Exception)
 
   Model.decorate_with Model::CollectionAdapter,
+                      Model::Serialization,
                       Model::Attributes,
                       Model::Persistence,
-                      Model::Relationships,
-                      Model::Serialization
+                      Model::Relationships
 
   def self.namespace name="App", options={}
     name = name.camelize
