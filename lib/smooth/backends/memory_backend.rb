@@ -15,7 +15,7 @@ class Smooth::MemoryBackend < Smooth::Backend
   end
 
   def all
-    Array records.values
+    Array(records.values)
   end
 
   def create attributes={}, options={}

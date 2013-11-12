@@ -4,6 +4,20 @@ class Smooth::Backend
   NotFound = Class.new(Exception)
 
   protected
+    def all
+      []
+    end
+
+    def method_missing meth, *args, &blk
+      if %w{each map select reject inject detect collect}.include? meth.to_s
+        if all && all.respond_to?(meth)
+          return all.send(meth,*args,&blk)
+        end
+      end
+
+      super
+    end
+
     def id_sequence
       @id_sequence ||= 0
     end

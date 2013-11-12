@@ -27,6 +27,7 @@ require "smooth/model/collection_adapter"
 require "smooth/model/namespace"
 require "smooth/model/persistence"
 require "smooth/model/relationships"
+require "smooth/model/query_adapter"
 require "smooth/model/serialization"
 
 module Smooth
@@ -35,7 +36,19 @@ module Smooth
                   Model::Persistence,
                   Model::Serialization,
                   Model::Attributes,
-                  Model::Relationships
+                  Model::Relationships,
+                  Model::QueryAdapter
+
+
+    def namespace
+      self.class.namespaace
+    end
+
+    def self.namespace
+      parts = to_s.split('::')
+      parts.pop
+      parts.length > 0 ? parts.join('').constantize : Object
+    end
 
     def self.define model_name, options={}, &block
       namespace = options.fetch(:namespace, Smooth)

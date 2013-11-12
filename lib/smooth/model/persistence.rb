@@ -37,5 +37,17 @@ module Smooth::Model::Persistence
     def find id
       collection.find(id)
     end
+
+    def models
+      collection.models
+    end
+
+    def first
+      models.first
+    end
+
+    def last
+      models.last
+    end
   end
 end

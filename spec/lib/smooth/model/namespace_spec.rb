@@ -2,7 +2,18 @@ require "spec_helper"
 
 Smooth.namespace("Site")
 
+Site.define "Component" do
+  attribute :name, String
+  attribute :type, String
+  attribute :format, String
+end
+
 describe Smooth::Model::Namespace do
+  it "should lookup a model class by an alias" do
+    Site.lookup_model_class_by("component").should == Site::Component
+    Site.lookup_model_class_by("components").should == Site::Component
+  end
+
   it "should create a new namespace to house models" do
     namespace = Smooth.namespace("Site")
     namespace.should respond_to(:define)
@@ -21,12 +32,11 @@ describe Smooth::Model::Namespace do
   end
 
   it "should allow me to specify config with the DSL" do
-    Site.define "Components" do
+    Site.define "Theme" do
       attribute :name, String
-      attribute :type, String
-      attribute :format, String
+      attribute :author, String
     end
 
-    Site::Components.attribute_names.should include(:name,:type,:format)
+    Site::Theme.attribute_names.should include(:name,:author)
   end
 end

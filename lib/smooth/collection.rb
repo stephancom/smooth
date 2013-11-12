@@ -15,6 +15,10 @@ module Smooth
       @model_class ||= self.name.gsub('::Collection','').constantize
     end
 
+    def self.namespace
+      self.model_class
+    end
+
     def self.backend_class
       @backend_class || Smooth::MemoryBackend
     end
@@ -30,7 +34,7 @@ module Smooth
       @options      = args.extract_options! || {}
       @namespace    = options.delete(:namespace)
       @id_sequence  = options.delete(:id_sequence) || 0
-      @models       = Array options.delete(:models)
+      @models       = options.delete(:models)
     end
 
     def model_class
@@ -42,26 +46,58 @@ module Smooth
     end
 
     def namespace
-      @namespace
+      @namespace || self.class.namespace
+    end
+
+    def all
+      models
+    end
+
+    def models
+      @models ||= backend.all.map {|h| data_or_model(h) }
     end
 
     def create attributes={}
-      backend.create(attributes)
+      data_or_model backend.create(attributes)
     end
 
     def update model_id, attributes={}
-      backend.update(model_id, attributes)
+      data_or_model backend.update(model_id, attributes)
     end
 
     def destroy model_id
-      backend.destroy(model_id)
+      data_or_model backend.destroy(model_id)
     end
 
-    def each &iterator
-      models.each(&iterator)
+    def find model_id
+      data_or_model backend.show(model_id)
+    end
+
+    def reset list=nil
+      @models = Array(list).map {|h| data_or_model(h) }
+    end
+
+    def fetch
+      @models = nil
+      models
     end
 
     def sync action, model_or_attributes={}, options={}
     end
+
+    def data_or_model hash={}
+      hash.is_a?(Hash) ? model_class.new(hash) : hash
+    end
+
+    def method_missing meth, *args, &blk
+      if %w{each map select reject inject detect collect}.include? meth.to_sym
+        if all && all.respond_to?(meth)
+          all.send(meth,*args,&blk)
+        end
+      end
+
+      super
+    end
+
   end
 end

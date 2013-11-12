@@ -19,8 +19,13 @@ describe Smooth::Model::Relationships do
     @parent = SmoothSpec::Parent.create(name:"parent name")
 
     3.times do |n|
-      SmoothSpec::Kid.create(name:"child #{n}",parent_id:parent.id)
+      SmoothSpec::Kid.create(name:"child #{n}",parent_id:@parent.id)
     end
+  end
+
+  it "should lookup the relationship class" do
+    SmoothSpec::Parent.relationship_class_for("kids").should == SmoothSpec::Kid
+    SmoothSpec::Parent.relationship_class_for("parent").should == SmoothSpec::Parent
   end
 
   it "should support has many" do

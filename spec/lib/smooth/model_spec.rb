@@ -1,6 +1,18 @@
 require "spec_helper"
 
+Smooth.namespace "SmoothSpec"
+
+SmoothSpec.define "SampleModel" do
+  attribute :something, String, :default => "Awesome"
+end
+
 describe SmoothModel do
+  describe "Namespaces" do
+    it "should know its namespace" do
+      SmoothSpec::SampleModel.namespace.should == SmoothSpec
+    end
+  end
+
   describe "Attributes" do
     it "should have attribute names" do
       SmoothModel.attribute_names.should include(:name,:id)

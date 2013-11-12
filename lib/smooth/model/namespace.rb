@@ -15,13 +15,21 @@ class Smooth::Model::Namespace
     self
   end
 
+  def self.lookup_model_class_by alias_key
+    const_get(alias_key.singularize.camelize)
+  end
+
   protected
     def initialize name, options
-      @name = name
+      @name = name.to_s.camelize
       @options = options
     end
 
     def namespace
       name
+    end
+
+    def lookup_model_class_by alias_key
+      self.class.lookup_model_class_by(alias_key)
     end
 end
