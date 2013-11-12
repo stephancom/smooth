@@ -3,13 +3,11 @@ class Smooth::Model::Namespace
 
   def self.create ns_name, options={}
     namespace = options.delete(:namespace) || Class.new(Smooth::Model::Namespace)
-
     Object.const_set(ns_name.camelize, namespace)
   end
 
   def self.define model_name, options={}, &block
     options[:namespace] = namespace
-
     Smooth::Model.send :define, model_name, options, &block
   end
 

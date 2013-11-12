@@ -1,10 +1,41 @@
+class Smooth::Model
+  include Virtus
+
+  cattr_accessor :decorators
+  self.decorators ||= Set.new
+
+  def self.decorate_with *list
+    list.each do |decorator|
+      self.send(:include, decorator)
+
+      if decorator.respond_to?(:decorate)
+        self.decorators << decorator
+      end
+    end
+  end
+
+  def self.inherited descendant
+    super
+    decorators.each do |decorator|
+      decorator.decorate(descendant)
+    end
+  end
+end
+
+require "smooth/model/attributes"
+require "smooth/model/collection_adapter"
+require "smooth/model/namespace"
+require "smooth/model/persistence"
+require "smooth/model/relationships"
+require "smooth/model/serialization"
+
 module Smooth
   class Model
-    include Virtus
-
-    cattr_accessor :decorators
-
-    self.decorators ||= Set.new
+    decorate_with Model::CollectionAdapter,
+                  Model::Persistence,
+                  Model::Serialization,
+                  Model::Attributes,
+                  Model::Relationships
 
     def self.define model_name, options={}, &block
       namespace = options.fetch(:namespace, Smooth)
@@ -25,21 +56,5 @@ module Smooth
       model_class
     end
 
-    def self.decorate_with *list
-      list.each do |decorator|
-        self.send(:include, decorator)
-
-        if decorator.respond_to?(:decorate)
-          self.decorators << decorator
-        end
-      end
-    end
-
-    def self.inherited descendant
-      super
-      decorators.each do |decorator|
-        decorator.decorate(descendant)
-      end
-    end
   end
 end

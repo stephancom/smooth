@@ -10,7 +10,6 @@ module Smooth::Model::Attributes
 
   module ClassMethods
     def attribute *args
-      puts "Acttributes "
       super
     end
 

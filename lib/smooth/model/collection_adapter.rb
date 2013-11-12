@@ -6,7 +6,7 @@ module Smooth::Model::CollectionAdapter
   end
 
   def self.decorate child
-    child.create_default_collection_class if child.collection_class.nil?
+    child.configure_collection if child.collection_class.nil?
   end
 
   def collection_class
@@ -26,7 +26,7 @@ module Smooth::Model::CollectionAdapter
       @collection ||= collection_class.new(self, options)
     end
 
-    def create_default_collection_class
+    def configure_collection
       instance_eval("#{ collection_class_name } = Class.new(Smooth::Collection)")
       self.collection_class = "#{collection_class_name}".constantize
     end
@@ -35,18 +35,8 @@ module Smooth::Model::CollectionAdapter
       (@collection_class && @collection_class.name) || "#{self.name}::Collection"
     end
 
-    if "".respond_to?(:safe_constantize)
-      def collection_class
-        @collection_class || collection_class_name.safe_constantize
-      end
-    else
-      def collection_class
-        begin
-          @collection_class || collection_class_name.constantize
-        rescue NameError => e
-          raise unless e.message =~ /uninitialized constant/
-        end
-      end
+    def collection_class
+      @collection_class || collection_class_name.safe_constantize
     end
   end
 end
