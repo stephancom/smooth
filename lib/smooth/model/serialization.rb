@@ -27,7 +27,7 @@ module Smooth::Model::Serialization
 
 
   module ClassMethods
-    def attribute name, klass, *args
+    def attribute name, klass=String, *args
       super
       serializer_class.attribute(name)
     end

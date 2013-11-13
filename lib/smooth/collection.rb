@@ -15,16 +15,25 @@ module Smooth
       @model_class ||= self.name.gsub('::Collection','').constantize
     end
 
+    def self.model_namespace
+      model_class.namespace
+    end
+
     def self.namespace
       self.model_class
     end
 
     def self.backend_class
-      @backend_class || Smooth::MemoryBackend
+      (const_get('Backend') rescue nil) || Smooth::MemoryBackend
     end
 
     def self.backend options={}
+      options[:namespace] ||= self.namespace
       @backend ||= backend_class.new(options)
+    end
+
+    def self.mutations_backend
+      @mutations_backend || backend
     end
 
     attr_accessor :options, :models, :id_sequence
@@ -90,7 +99,7 @@ module Smooth
     end
 
     def method_missing meth, *args, &blk
-      if %w{each map select reject inject detect collect}.include? meth.to_sym
+      if %w{each map select reject inject detect collect}.include? meth.to_s
         if all && all.respond_to?(meth)
           all.send(meth,*args,&blk)
         end

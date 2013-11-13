@@ -33,10 +33,12 @@ module Smooth::Model::Relationships
 
     def has_many relationship, *args
       options     = args.extract_options!
-      key_column  = options.fetch(:foreign_key, nil)
+      key_column  = options.fetch(:foreign_key, relationship.to_s.downcase.singularize.underscore + '_id')
 
       define_method(relationship) do
-        relationship_class_for(relationship).query(parent_id: self.id)
+        q = {}
+        q[key_column] = self.send(:id)
+        relationship_class_for(relationship).query(q)
       end
     end
   end
