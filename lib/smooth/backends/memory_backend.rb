@@ -1,18 +1,5 @@
 class Smooth::MemoryBackend < Smooth::Backend
-  attr_accessor :records, :options
-
-  def initialize options={}
-    @options      = options.dup
-    @id_sequence  = @options.fetch(:id_sequence, 0)
-    records       = @options.fetch(:records, [])
-
-    @records = records.inject({}) do |memo,object|
-      object.symbolize_keys!
-      id = assign_id_to(object)
-      memo[id] = object
-      memo
-    end
-  end
+  attr_accessor :records, :options, :namespace
 
   def all
     Array(records.values)
