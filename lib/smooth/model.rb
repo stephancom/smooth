@@ -39,30 +39,34 @@ module Smooth
                   Model::Relationships,
                   Model::QueryAdapter
 
-
+    # The namespace a model's class belongs to. E.g
+    # Application::Model.namespace == Application
     def namespace
       self.class.namespaace
     end
 
+    # The namespace a model class belongs to. E.g
+    # Application::Model.namespace == Application
     def self.namespace
       parts = to_s.split('::')
       parts.pop
       parts.length > 0 ? parts.join('').constantize : Object
     end
 
+    # def
     def self.define model_name, options={}, &block
-      namespace = options.fetch(:namespace, Smooth)
+      ns = options.fetch(:namespace, namespace)
 
       base = options.fetch(:base, Smooth::Model)
       instance_eval %Q{
-        class #{ namespace }::#{ model_name.camelize } < #{ base }
+        class #{ ns }::#{ model_name.camelize } < #{ base }
           def self.name
             "#{ model_name }"
           end
         end
       }
 
-      model_class = namespace.const_get(model_name.camelize)
+      model_class = ns.const_get(model_name.camelize)
 
       model_class.instance_eval(&block) if block_given?
 
