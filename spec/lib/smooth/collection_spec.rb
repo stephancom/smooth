@@ -10,6 +10,10 @@ class SmoothModel::Collection < Smooth::Collection
 end
 
 class SmoothModel::Collection::Backend < Smooth::MemoryBackend
+  def sup!
+    "jmoney"
+  end
+
   def self.sup?
     "biggie smalls is the illest"
   end
@@ -27,8 +31,17 @@ describe SmoothModel::Collection do
     collection.backend_class.should respond_to(:sup?)
   end
 
+  it "should create a custom backend instance" do
+    well = collection.backend.sup!
+    well.should == "jmoney"
+  end
+
   it "should have a memory backend by default" do
     SpecModel::Sample::Collection.backend_class.should == Smooth::MemoryBackend
+  end
+
+  it "should have a backend" do
+    SpecModel::Sample.collection.backend.should be_a(Smooth::MemoryBackend)
   end
 
   it "should know its model" do

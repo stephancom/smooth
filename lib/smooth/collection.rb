@@ -24,11 +24,13 @@ module Smooth
     end
 
     def self.backend_class
-      (const_get('Backend') rescue nil) || Smooth::MemoryBackend
+      (model_class.try(:const_get,'Backend') rescue nil) || (const_get('Backend') rescue nil) || Smooth::MemoryBackend
     end
 
     def self.backend options={}
       options[:namespace] ||= self.namespace
+      options[:model]     ||= self.model_class
+
       @backend ||= backend_class.new(options)
     end
 
@@ -36,7 +38,7 @@ module Smooth
       @mutations_backend || backend
     end
 
-    attr_accessor :options, :models, :id_sequence
+    attr_accessor :options, :models, :id_sequence, :backend
 
     def initialize model_class=nil, *args
       @model_class  = model_class
@@ -44,6 +46,10 @@ module Smooth
       @namespace    = options.delete(:namespace)
       @id_sequence  = options.delete(:id_sequence) || 0
       @models       = options.delete(:models)
+    end
+
+    def backend
+      @backend ||= self.class.backend_class.new(self)
     end
 
     def model_class
