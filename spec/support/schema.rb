@@ -3,9 +3,7 @@ require 'active_record'
 ActiveRecord::Base.establish_connection(adapter:"sqlite3",database:":memory:")
 
 DevNull = Logger.new("/dev/null")
-
 ActiveRecord::Base.logger = DevNull
-
 ActiveRecord::Migration.verbose = false
 
 ActiveRecord::Schema.define do

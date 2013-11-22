@@ -22,8 +22,10 @@ end
 class Smooth::RedisBackend < Smooth::MemoryBackend
   include Redis::Objects
 
+  self.redis= Smooth.redis
+
   counter :id_counter, :start => 1
-  hash_key :record_storage
+  hash_key :record_storage, :marshal => true
 
   def records
     record_storage

@@ -22,6 +22,23 @@ module Smooth::Model::CollectionAdapter
   end
 
   module ClassMethods
+    def use backend, *args
+      name = backend.to_s.camelize
+
+      klass = Smooth.const_get("#{ name }Backend") rescue nil
+      klass ||= Object.const_get(name) rescue nil
+      klass ||= namespace.const_get(name) rescue nil
+      klass ||= Smooth.const_get(name) rescue nil
+
+      collection_class.backend_class = if klass && klass.ancestors.include?(Smooth::Backend)
+        klass
+      elsif klass && klass.is_a?(ActiveRecord::Base)
+        Smooth::ActiveRecordBackend
+      else
+        raise "Invalid Backend specified."
+      end
+    end
+
     def collection options={}
       @collection ||= collection_class.new(self, options)
     end
