@@ -1,7 +1,9 @@
 class Smooth::Model
   include Virtus
+  include ActiveModel::Validations
 
   cattr_accessor :decorators
+
   self.decorators ||= Set.new
 
   def self.decorate_with *list
@@ -24,7 +26,6 @@ end
 
 require "smooth/model/attributes"
 require "smooth/model/collection_adapter"
-require "smooth/model/namespace"
 require "smooth/model/persistence"
 require "smooth/model/relationships"
 require "smooth/model/query_adapter"

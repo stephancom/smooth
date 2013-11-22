@@ -4,12 +4,29 @@ Smooth.namespace "SmoothSpec"
 
 SmoothSpec.define "SampleModel" do
   attribute :something, String, :default => "Awesome"
+  attribute :status, String
+
+  validates_presence_of :status
+  validates_inclusion_of :status, :in => ["VERIFIED"]
+
 end
 
 describe SmoothModel do
   describe "Namespaces" do
     it "should know its namespace" do
       SmoothSpec::SampleModel.namespace.should == SmoothSpec
+    end
+  end
+
+  describe "Validations" do
+    it "should support presence validations" do
+      SmoothSpec::SampleModel.new.should be_invalid
+      SmoothSpec::SampleModel.new(:status=>"VERIFIED").should be_valid
+    end
+
+    it "should support inclusion validations" do
+      SmoothSpec::SampleModel.new(status:"VERIFIED").should be_valid
+      SmoothSpec::SampleModel.new(status:"NOT_VERIFIED").should be_invalid
     end
   end
 

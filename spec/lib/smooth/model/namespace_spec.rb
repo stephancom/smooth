@@ -8,7 +8,7 @@ Site.define "Component" do
   attribute :format, String
 end
 
-describe Smooth::Model::Namespace do
+describe Smooth::Namespace do
   it "should lookup a model class by an alias" do
     Site.lookup_model_class_by("component").should == Site::Component
     Site.lookup_model_class_by("components").should == Site::Component

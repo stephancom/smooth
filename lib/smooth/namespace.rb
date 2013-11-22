@@ -1,8 +1,8 @@
-class Smooth::Model::Namespace
+class Smooth::Namespace
   attr_accessor :name, :options
 
   def self.create ns_name, options={}
-    namespace = options.delete(:namespace) || Class.new(Smooth::Model::Namespace)
+    namespace = options.delete(:namespace) || Class.new(self)
     Object.const_set(ns_name.camelize, namespace)
   end
 

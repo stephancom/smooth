@@ -30,9 +30,10 @@ module Smooth
   def self.namespace name="App", options={}
     name = name.camelize
     ns = Object.const_get(name) rescue nil
-    ns || Smooth::Model::Namespace.create(name,options)
+    ns || Smooth::Namespace.create(name,options)
   end
 end
 
+require "smooth/namespace"
 require "smooth/collection"
 require "smooth/model"
