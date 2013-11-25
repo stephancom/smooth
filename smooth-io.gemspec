@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'redis-objects'
   s.add_dependency 'redis-namespace'
   s.add_dependency "typhoeus"
+  s.add_dependency "commander"
 
   s.add_development_dependency 'rspec', '~> 2.6.0'
   s.add_development_dependency 'machinist', '~> 1.0.6'
