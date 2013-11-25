@@ -2,7 +2,34 @@
 
 begin
   require 'smooth'
+  require 'commander/import'
 rescue
   require 'rubygems'
   require 'smooth'
+  require 'commander/import'
+end
+
+begin
+  require File.join(Dir.pwd(),'config','environment')
+rescue
+  nil
+end
+
+program :name, Smooth::Name 
+program :version, Smooth::Version
+program :description, Smooth::Description
+
+command(:client) do |c|
+  c.syntax = 'smooth client [options]'
+  c.description = 'Generate client side model assets configured to work with your backend'
+
+  c.option '--adapter STRING', String, 'Choose which client library you want to generate models for. (e.g. ember, backbone, ios)'
+  c.option '--namespace STRING', String, 'Choose which client library you want to generate models for. (e.g. ember, backbone, ios)'
+
+  c.action do |args, options|
+    options.default :adapter => 'ember', 
+                    :namespace => Smooth.namespaces.first
+
+    generator = Smooth::CodeGenerators.for(options.adapter).on(options.namespace)
+  end
 end
