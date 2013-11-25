@@ -16,7 +16,15 @@ class Smooth::Namespace
   end
 
   def self.lookup_model_class_by alias_key
-    const_get(alias_key.singularize.camelize)
+    const_get(alias_key.to_s.singularize.camelize)
+  end
+
+  def self.models
+    constants.map {|k| lookup_model_class_by(k) }.select {|c| c.ancestors.include?(Smooth::Model) }
+  end
+
+  def self.code_modified_at
+    models.map(&:code_modified_at).sort.reverse.last
   end
 
   protected

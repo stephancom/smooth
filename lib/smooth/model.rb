@@ -4,7 +4,14 @@ class Smooth::Model
 
   cattr_accessor :decorators
 
+  class_attribute :code_modified_at
+
+  self.code_modified_at = Time.now.utc
   self.decorators ||= Set.new
+
+  def self.modify_code!
+    self.code_modified_at = Time.now.utc
+  end
 
   def self.decorate_with *list
     list.each do |decorator|
@@ -18,6 +25,7 @@ class Smooth::Model
 
   def self.inherited descendant
     super
+
     decorators.each do |decorator|
       decorator.decorate(descendant)
     end

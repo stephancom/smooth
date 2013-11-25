@@ -22,6 +22,8 @@ module Smooth::Model::Relationships
       options       = args.extract_options!
       key_column    = options.fetch(:foreign_key, relationship.to_s.downcase.underscore + '_id')
 
+      modify_code!
+
       unless attribute_names.include?(key_column)
         attribute key_column.to_sym, Integer
       end
@@ -34,6 +36,8 @@ module Smooth::Model::Relationships
     def has_many relationship, *args
       options     = args.extract_options!
       key_column  = options.fetch(:foreign_key, relationship.to_s.downcase.singularize.underscore + '_id')
+
+      modify_code!
 
       define_method(relationship) do
         q = {}

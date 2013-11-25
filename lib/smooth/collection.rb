@@ -1,9 +1,4 @@
-require "smooth/backends/backend"
-require "smooth/backends/active_record_backend"
-require "smooth/backends/memory_backend"
-require "smooth/backends/file_backend"
-require "smooth/backends/redis_backend"
-require "smooth/backends/rest_backend"
+require "smooth/backend"
 
 module Smooth
   class Collection
@@ -37,10 +32,15 @@ module Smooth
       @models       = options.delete(:models)
     end
 
+    def uuid
+      nil
+    end
+
     def backend
       @backend ||= self.class.backend_class.new(model_class: model_class,
                                                 collection_class: self.class,
-                                                namespace: self.class.model_namespace
+                                                namespace: self.class.model_namespace,
+                                                uuid: uuid
                                                )
     end
 

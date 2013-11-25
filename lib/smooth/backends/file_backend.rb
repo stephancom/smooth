@@ -8,15 +8,20 @@ class Smooth::FileBackend < Smooth::MemoryBackend
   end
 
   def initialize options={}
+    @storage_class = options.fetch(:storage_class, storage_class)
     @processed  = @repaired = true
     super
   end
 
-  protected
-    def storage
-      @storage ||= self.class.storage_class.new(self)
-    end
+  def storage_class
+    @storage_class || self.class.storage_class
+  end
 
+  def storage
+    @storage ||= self.class.storage_class.new(self)
+  end
+
+  protected
     def determine_last_modified_date
       @last_modified ||= storage.mtime
     end

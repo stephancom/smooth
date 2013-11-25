@@ -37,3 +37,4 @@ end
 require "smooth/namespace"
 require "smooth/collection"
 require "smooth/model"
+require "smooth/code_generators"
