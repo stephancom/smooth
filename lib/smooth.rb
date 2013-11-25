@@ -1,3 +1,4 @@
+require 'pry'
 require "smooth/version"
 require "smooth/dependencies"
 
@@ -5,7 +6,9 @@ module Smooth
   InvalidCollection ||= Class.new(Exception)
   InvalidRecord ||= Class.new(Exception)
 
-  mattr_accessor :data_directory, :environment
+  mattr_accessor  :data_directory,
+                  :environment,
+                  :_namespaces
 
   def self.redis= connection
     if !connection.is_a?(Redis::Namespace) && connection.is_a?(Redis)
@@ -27,10 +30,25 @@ module Smooth
     @@data_directory ||= Pathname.new(File.join(ENV['HOME'],'.smooth',environment))
   end
 
-  def self.namespace name="App", options={}
-    name = name.camelize
+  def self.namespace name="App", options={}, &block
     ns = Object.const_get(name) rescue nil
-    ns || Smooth::Namespace.create(name,options)
+
+    raise "Namespace already exists" if ns && ns.is_a?(Smooth::Namespace)
+
+    ns = ns || Smooth::Namespace.create(name,options)
+
+    ns.instance_eval(&block) if block_given?
+
+    self._namespaces += [ns.to_s]
+    ns
+  end
+
+  def self._namespaces
+    @@_namespaces ||= []
+  end
+
+  def self.namespaces
+    _namespaces.map(&:constantize)
   end
 end
 

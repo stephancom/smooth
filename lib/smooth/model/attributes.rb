@@ -6,9 +6,9 @@ module Smooth::Model::Attributes
   end
 
   module ClassMethods
-    def attribute *args
+    def attribute name, type=String, *args
       modify_code!
-      super
+      super(name,type,*args)
     end
 
     def attribute_names

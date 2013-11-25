@@ -2,8 +2,14 @@ class Smooth::Namespace
   attr_accessor :name, :options
 
   def self.create ns_name, options={}
-    namespace = options.delete(:namespace) || Class.new(self)
+    namespace = options.delete(:namespace) || Class.new(Smooth::Namespace)
     Object.const_set(ns_name.camelize, namespace)
+
+    if options[:backend]
+      namespace.use(options[:backend])
+    end
+
+    namespace
   end
 
   def self.define model_name, options={}, &block
@@ -25,6 +31,14 @@ class Smooth::Namespace
 
   def self.code_modified_at
     models.map(&:code_modified_at).sort.reverse.last
+  end
+
+  def self.use backend_id
+    @default_backend_class = "Smooth::#{ backend_id.to_s.camelize }Backend".constantize
+  end
+
+  def self.default_backend_class
+    @default_backend_class
   end
 
   protected

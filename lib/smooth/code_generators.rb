@@ -30,7 +30,7 @@ module Smooth
     end
 
     def self.[] generator
-      case generator
+      case generator.to_sym
       when :ember
         Adapter.new(EmberModel)
       end

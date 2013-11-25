@@ -19,7 +19,7 @@ module Smooth
     end
 
     def self.backend_class
-      @backend_class || (model_class.try(:const_get,'Backend') rescue nil) || (const_get('Backend') rescue nil) || Smooth::MemoryBackend
+      @backend_class || (model_class.try(:const_get,'Backend') rescue nil) || (const_get('Backend') rescue nil) || model_namespace.default_backend_class || Smooth::MemoryBackend
     end
 
     attr_accessor :options, :models, :id_sequence, :backend

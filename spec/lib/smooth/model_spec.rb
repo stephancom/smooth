@@ -5,6 +5,7 @@ Smooth.namespace "SmoothSpec"
 SmoothSpec.define "SampleModel" do
   attribute :something, String, :default => "Awesome"
   attribute :status, String
+  attribute :default_type
 
   validates_presence_of :status
   validates_inclusion_of :status, :in => ["VERIFIED"]
@@ -32,7 +33,13 @@ describe SmoothModel do
 
   describe "Attributes" do
     it "should have attribute names" do
-      SmoothModel.attribute_names.should include(:name,:id)
+      attribute_names = SmoothSpec::SampleModel.attribute_names
+      names = attribute_names & [:something,:default_type,:status]
+      names.length.should == 3
+    end
+
+    it "should default type of string" do
+      SmoothSpec::SampleModel.attribute_set.to_a.last.should be_a(Virtus::Attribute::String)
     end
   end
 
