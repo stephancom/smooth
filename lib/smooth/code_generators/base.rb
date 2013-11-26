@@ -1,7 +1,7 @@
 module Smooth
   module CodeGenerators
     class Base
-      attr_accessor :klass, :template_file, :options
+      attr_accessor :klass, :template_file, :options, :path
 
       def self.generate model_class, options={}
         new(model_class, options)

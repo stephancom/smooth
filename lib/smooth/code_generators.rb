@@ -1,35 +1,29 @@
+# This is just an experiment w/ different syntactic sugar.
 module Smooth
   module CodeGenerators
     require "smooth/code_generators/base"
     require "smooth/code_generators/ember_model"
 
     class Adapter
-      attr_accessor :generator
+      attr_accessor :generator_klass, :source, :output_path
 
-      def initialize generator
-        @generator = generator
+      def initialize(klass)
+        @generator_klass = klass
       end
 
-      def run
-        self
-      end
-
-      def [] namespace
-        on(namespace)
-      end
-
-      def on namespace
-        namespace.models.map do |k|
-          generator.new(k).render.strip
-        end.join("\n")
+      def run!
+        case
+          when source.nil?
+            raise "Must specify a source model or namespace"
+          when source.ancestors.include?(Smooth::Namespace)
+            puts "Boom! Namespace"
+          when source.ancestors.include?(Smooth::Model)
+            puts "Boom! Model"
+        end
       end
     end
 
     def self.for generator
-      send(:[],generator)
-    end
-
-    def self.[] generator
       case generator.to_sym
       when :ember
         Adapter.new(EmberModel)

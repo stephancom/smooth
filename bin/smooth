@@ -25,11 +25,19 @@ command(:client) do |c|
 
   c.option '--adapter STRING', String, 'Choose which client library you want to generate models for. (e.g. ember, backbone, ios)'
   c.option '--namespace STRING', String, 'Choose which client library you want to generate models for. (e.g. ember, backbone, ios)'
+  c.option '--output PATH', String, 'Choose which folder you would like store the output'
 
   c.action do |args, options|
     options.default :adapter => 'ember', 
-                    :namespace => Smooth.namespaces.first
+                    :namespace => Smooth.namespaces.first,
+                    :output => Rails.root.join("app","assets",Smooth.namespaces.first.to_s.downcase.parameterize,'models.coffee')
 
-    generator = Smooth::CodeGenerators.for(options.adapter).on(options.namespace)
+    generator = Smooth::CodeGenerators.for(options.adapter)
+    generator.source = options.namespace
+    generator.output_path = options.output
+    
+    binding.pry
+
+    generator.run!
   end
 end

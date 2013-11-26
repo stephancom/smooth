@@ -67,13 +67,18 @@ module Smooth
       ns = options.fetch(:namespace, namespace)
 
       base = options.fetch(:base, Smooth::Model)
-      instance_eval %Q{
+
+      ns = ns.class unless ns.is_a?(Class)
+
+      code = %Q{
         class #{ ns }::#{ model_name.camelize } < #{ base }
           def self.name
             "#{ model_name }"
           end
         end
       }
+
+      instance_eval(code)
 
       model_class = ns.const_get(model_name.camelize)
 

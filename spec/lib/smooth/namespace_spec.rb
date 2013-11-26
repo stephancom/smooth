@@ -14,6 +14,10 @@ describe Smooth::Namespace do
   end
 
   describe "setting config defaults" do
+    it "should allow me to set a default backend class" do
+      DefaultBackends.default_backend_class.should == Smooth::RedisBackend
+    end
+
     it "should allow me to set a default backend class for all models" do
       DefaultBackends::Model.collection.backend_class.should == Smooth::RedisBackend
     end

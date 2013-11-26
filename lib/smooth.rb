@@ -39,17 +39,19 @@ module Smooth
 
     ns.instance_eval(&block) if block_given?
 
-    self._namespaces += [ns.to_s]
     ns
   end
 
-  def self._namespaces
+  def self.register_namespace(namespace)
     @@_namespaces ||= []
+    @@_namespaces << namespace.to_s
+    self
   end
 
   def self.namespaces
-    _namespaces.map(&:constantize)
+    (@@_namespaces ||= []).map(&:constantize)
   end
+
 end
 
 require "smooth/namespace"
