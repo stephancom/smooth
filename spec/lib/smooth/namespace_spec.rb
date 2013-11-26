@@ -8,9 +8,15 @@ DefaultBackends.define "Model" do
   attribute :name
 end
 
+DefaultBackends.define "OtherModel"
+
 describe Smooth::Namespace do
   it "should tell me whatever namespaces are registered" do
     Smooth.namespaces.should include(DefaultBackends)
+  end
+
+  it "should tell me what models are defined" do
+    DefaultBackends.models.should include(DefaultBackends::Model, DefaultBackends::OtherModel)
   end
 
   describe "setting config defaults" do

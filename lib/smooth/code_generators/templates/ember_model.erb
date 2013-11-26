@@ -1,1 +1,23 @@
+<%
+def ember_attribute_type attribute
+  primitive = attribute.try(:options).fetch(:primitive,String)
+
+  case primitive
+  when String
+    "attr('string')"
+  when Integer
+    "attr('number')"
+  when Hash
+    "\n    embedded: true"
+  else
+    ""
+  end
+end
+%>attr = DS.attr
+belongsTo = DS.belongsTo
+hasMany = DS.hasMany
+
 <%= @klass.namespace.to_s %>.<%= @klass.name %> = DS.Model.extend
+<% @klass.attribute_set.each do |attribute| %>  <%= attribute.name %>:<%= ember_attribute_type(attribute) %> 
+<% end %>
+

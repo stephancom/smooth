@@ -33,7 +33,14 @@ class Smooth::Namespace
   end
 
   def models
-    self.class.constants.select {|c| c.is_a?(Smooth::Model)  }
+    ns = self.class
+
+    ns.constants.map do |sym|
+      constant = ns.const_get(sym)
+      if constant.respond_to?(:ancestors) && constant.ancestors.include?(Smooth::Model)
+        constant
+      end
+    end.compact
   end
 
   def lookup_model_class_by aliased
