@@ -35,4 +35,12 @@ describe Smooth::Model::Relationships do
   it "should support belongs to" do
     SmoothSpec::Kid.first.parent.should be_a(SmoothSpec::Parent)
   end
+
+  it "should record the belongs to relationships" do
+    SmoothSpec::Kid.belongs_to_relationships.should_not be_empty
+  end
+
+  it "should record the has many relationships" do
+    SmoothSpec::Parent.has_many_relationships.should_not be_empty
+  end
 end

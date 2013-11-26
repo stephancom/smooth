@@ -1,16 +1,16 @@
 <%
-def ember_attribute_type attribute
-  primitive = attribute.try(:options).fetch(:primitive,String)
-
-  case primitive
-  when String
+def ember_attribute_type primitive
+  case primitive.to_s
+  when "String"
     "attr('string')"
-  when Integer
+  when "Integer"
     "attr('number')"
-  when Hash
-    "\n    embedded: true"
+  when "Hash","Array","Set"
+    "{embedded:'always'}"
+  when "DateTime"
+    "attr('date')"
   else
-    ""
+    "attr()"
   end
 end
 %>attr = DS.attr
@@ -18,6 +18,10 @@ belongsTo = DS.belongsTo
 hasMany = DS.hasMany
 
 <%= @klass.namespace.to_s %>.<%= @klass.name %> = DS.Model.extend
-<% @klass.attribute_set.each do |attribute| %>  <%= attribute.name %>:<%= ember_attribute_type(attribute) %> 
+<% @klass.defined_attributes.each do |attribute| %>  <%= attribute.name.to_s.camelize(:lower) %>:<%= ember_attribute_type(attribute.type) %> 
+<% end %>
+<% @klass.belongs_to_relationships.each do |rel| %>  <%= rel._method %>: belongsTo('<%= @klass.namespace.to_s + '.' + rel.name %>',key:'<%= rel.key %>')
+<% end %>
+<% @klass.has_many_relationships.each do |rel| %>  <%= rel._method %>: hasMany('<%= @klass.namespace.to_s + '.' + rel.name %>',key:'<%= rel.key %>')
 <% end %>
 
