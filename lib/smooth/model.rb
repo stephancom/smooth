@@ -87,5 +87,9 @@ module Smooth
       model_class
     end
 
+    def self.find_active_record_for model_class
+      name = model_class.to_s.split('::').last
+      Object.const_get(name) rescue nil
+    end
   end
 end

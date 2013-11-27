@@ -36,10 +36,8 @@ class Smooth::Namespace
     ns = self.class
 
     ns.constants.map do |sym|
-      constant = ns.const_get(sym)
-      if constant.respond_to?(:ancestors) && constant.ancestors.include?(Smooth::Model)
-        constant
-      end
+      constant = ns.const_get(sym) rescue nil
+      constant if constant.respond_to?(:<) && constant < Smooth::Model
     end.compact
   end
 

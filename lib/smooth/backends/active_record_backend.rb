@@ -9,9 +9,7 @@ class Smooth::ActiveRecordBackend < Smooth::Backend
   end
 
   def active_record
-    parts = model_class.to_s.split('::')
-    klass = Object.const_get(parts.last) rescue nil
-    klass
+    Smooth::Model.find_active_record_for(model_class)
   end
 
   def create attributes={}

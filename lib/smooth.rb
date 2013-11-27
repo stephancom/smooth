@@ -58,3 +58,4 @@ require "smooth/namespace"
 require "smooth/collection"
 require "smooth/model"
 require "smooth/code_generators"
+require "smooth/engine" if defined?(::Rails)

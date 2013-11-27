@@ -28,16 +28,13 @@ command(:client) do |c|
   c.option '--output PATH', String, 'Choose which folder you would like store the output'
 
   c.action do |args, options|
-    output = defined?(::Rails) ? ::Rails.root.join("app","assets",Smooth.namespaces.first.to_s.downcase.parameterize,'models.coffee') : File.join(Dir.pwd(),'models.coffee')
-
-    options.default :adapter => 'ember', 
-                    :namespace => Smooth.namespaces.first,
-                    :output => output 
+    options.default :adapter => 'ember' 
 
     generator = Smooth::CodeGenerators.for(options.adapter)
-    generator.source = options.namespace
-    generator.output_path = options.output
-
+    generator.source = options.namespace.constantize
+    generator.output_path = "#{ Dir.pwd() }/models.coffee" 
+    
+    puts "Generating in #{ options.output }"
     generator.run!
   end
 end

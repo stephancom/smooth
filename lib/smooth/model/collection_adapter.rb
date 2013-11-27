@@ -13,6 +13,10 @@ module Smooth::Model::CollectionAdapter
     self.class.collection_class
   end
 
+  def backend_class
+    self.class.backend_class
+  end
+
   def collection= collection
     @collection = collection
   end
@@ -21,8 +25,22 @@ module Smooth::Model::CollectionAdapter
     @collection || self.class.collection(options)
   end
 
+  def active_record_backend?
+    self.class.active_record_backend?
+  end
+
   module ClassMethods
+
+    def backend_class
+      collection_class.backend_class
+    end
+
+    def active_record_backend?
+      backend_class == Smooth::ActiveRecordBackend || (backend_class < Smooth::ActiveRecordBackend)
+    end
+
     def use backend, *args
+      options = args.extract_options!
       name = backend.to_s.camelize
 
       klass = Smooth.const_get("#{ name }Backend") rescue nil
@@ -30,13 +48,18 @@ module Smooth::Model::CollectionAdapter
       klass ||= namespace.const_get(name) rescue nil
       klass ||= Smooth.const_get(name) rescue nil
 
-      collection_class.backend_class = if klass && klass.ancestors.include?(Smooth::Backend)
+      collection_class.backend_class = if klass < Smooth::Backend
         klass
-      elsif klass && klass.is_a?(ActiveRecord::Base)
+      elsif klass < ActiveRecord::Base
         Smooth::ActiveRecordBackend
       else
         raise "Invalid Backend specified."
       end
+
+      if options[:attributes] && active_record_backend?
+        load_attributes_from_active_record!
+      end
+
     end
 
     def collection options={}
