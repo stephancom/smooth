@@ -35,8 +35,8 @@ describe Smooth::RedisBackend do
   it "should allow me to destroy records" do
     result = backend.create name:"Bruce Lee"
     id = result[:id]
+    Redis.any_instance.should_receive(:hdel).with(backend.redis_key, id)
     backend.destroy(id).should be_present
-    backend.show(id).should_not be_present
   end
 
   it "should allow me to update records" do

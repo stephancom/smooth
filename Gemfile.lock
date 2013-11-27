@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    smooth-io (0.0.6)
+    smooth-io (0.0.7)
       active_model_serializers (~> 0.8.1)
       activerecord (~> 4.0.0)
       activesupport (~> 4.0.0)
