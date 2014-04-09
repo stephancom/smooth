@@ -11,8 +11,8 @@ Gem::Specification.new do |s|
   s.summary       = "Smooth persistence"
   s.description   = "Cross platform, syncable persistence"
 
-  s.add_dependency 'activesupport', '~> 4.0.0'
-  s.add_dependency 'activerecord', '~> 4.0.0'
+  s.add_dependency 'activesupport', '~> 4.1.0'
+  s.add_dependency 'activerecord', '~> 4.1.0'
   s.add_dependency 'active_model_serializers', '~> 0.8.1'
   s.add_dependency 'virtus', '0.5.5'
   s.add_dependency 'redis'
